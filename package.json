@@ -1,5 +1,5 @@
 {
-  "name": "modal-project3",
+  "name": "brandteknisk",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,8 +8,11 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "debounce": "^1.2.1",
+    "firebase": "^10.4.0",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vuefire": "^3.1.17"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",

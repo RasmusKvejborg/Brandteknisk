@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Kontrolgenstande</th>
+            <th>Kontrolplan ID</th>
+            <th colspan="2">Aktør</th>
+            <th v-show="showSelect">Udgivelsesdato</th>
+            <th v-show="showSelect">Version</th>
+            <th colspan="2" v-show="showSelect">Kontroltype</th>
+            <th colspan="2" v-show="showSelect">Kontrolniveau</th>
+            <th v-show="showSelect">Stikprøvekontrol</th>
+            <th v-show="showSelect">Rev.dato</th>
+          </tr>
+          <tr class="headline">
+            <th colspan="3">Design</th>
+            <th>Design/Projektering</th>
+            <th>Udførsel</th>
+            <th v-show="showSelect"></th>
+            <th v-show="showSelect"></th>
+            <th v-show="showSelect">Design/Projektering</th>
+            <th v-show="showSelect">Udførsel</th>
+            <th v-show="showSelect">Design/Prjektering</th>
+            <th v-show="showSelect">Udførsel</th>
+            <th v-show="showSelect"></th>
+            <th v-show="showSelect"></th>
+          </tr>
+
+          <!-- table row for auto completion -->
+          <tr class="headline">
+            <th colspan="3"></th>
+            <th></th>
+            <th></th>
+            <th v-show="showSelect">
+              <input
+                type="date"
+                v-on:input="changeValues('udgivelsesDato', 'udgivelsesDatoValues')"
+                v-model="udgivelsesDato"
+              />
+            </th>
+            <th v-show="showSelect">
+              <select
+                v-on:change="changeValues('selectedVersion', 'versionValues')"
+                v-model="selectedVersion"
+              >
+                <option
+                  v-for="option in versionData"
+                  :key="option.id"
+                  :value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </th>
+            <th v-show="showSelect">
+              <select
+                v-on:change="changeValues('selectedKontrolType1', 'kontrolTypeValues1')"
+                v-model="selectedKontrolType1"
+              >
+                <option
+                  v-for="option in kontrolTypeData"
+                  :key="option.id"
+                  :value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </th>
+            <th v-show="showSelect">
+              <select
+                v-on:change="changeValues('selectedKontrolType2', 'kontrolTypeValues2')"
+                v-model="selectedKontrolType2"
+              >
+                <option
+                  v-for="option in kontrolTypeData"
+                  :key="option.id"
+                  :value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </th>
+            <th v-show="showSelect">
+              <select
+                v-on:change="changeValues('selectedKontrolNiveau1', 'kontrolniveauValues1')"
+                v-model="selectedKontrolNiveau1"
+              >
+                <option
+                  v-for="option in kontrolniveauData"
+                  :key="option.id"
+                  :value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </th>
+            <th v-show="showSelect">
+              <select
+                v-on:change="changeValues('selectedKontrolNiveau2', 'kontrolniveauValues2')"
+                v-model="selectedKontrolNiveau2"
+              >
+                <option
+                  v-for="option in kontrolniveauData"
+                  :key="option.id"
+                  :value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </th>
+            <th v-show="showSelect">
+              <select
+                v-on:change="changeValues('selectedStikprove', 'stikproveValues')"
+                v-model="selectedStikprove"
+              >
+                <option
+                  v-for="option in stikproveData"
+                  :key="option.id"
+                  :value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </th>
+            <th v-show="showSelect">
+              <input
+                type="date"
+                v-on:input="changeValues('revDato', 'revDatoValues')"
+                v-model="revDato"
+              />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in filteredData('designData')" :key="item.id">
+            <td>{{ item.label }}</td>
+            <td>
+              <label :for="item.id">
+                <input type="checkbox" :id="item.id" :name="item.id" />
+                {{ item.description }}
+              </label>
+            </td>
+            <td>{{ item.kontrolplansId }}</td>
+            <td>
+              <select>
+                <option
+                  v-for="option in aktørData"
+                  :key="option.id"
+                  value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </td>
+            <td></td>
+            <td>
+              <form>
+                <input v-model="udgivelsesDatoValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="versionValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolTypeValues1[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolTypeValues2[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolniveauValues1[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolniveauValues2[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="stikproveValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="revDatoValues[item.id]" />
+              </form>
+            </td>
+
+            <!-- overskrifter anden række -->
+          </tr>
+        </tbody>
+
+        <tr class="headline">
+          <th colspan="3">Flugtvejs- og indsatsforhold</th>
+          <th></th>
+          <th></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+        </tr>
+
+        <!-- -------------  anden række---------------------- -->
+
+        <tbody>
+          <tr v-for="item in filteredData('designData')" :key="item.id">
+            <td>{{ item.label }}</td>
+            <td>
+              <label :for="item.id">
+                <input type="checkbox" :id="item.id" :name="item.id" />
+                {{ item.description }}
+              </label>
+            </td>
+            <td>{{ item.kontrolplansId }}</td>
+            <td>
+              <select>
+                <option
+                  v-for="option in aktørData"
+                  :key="option.id"
+                  value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </td>
+            <td>
+              <select style="width: 100%">
+                <option
+                  v-for="option in aktørData"
+                  :key="option.id"
+                  value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </td>
+
+            <td>
+              <form>
+                <input v-model="udgivelsesDatoValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="versionValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolTypeValues1[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolTypeValues2[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolniveauValues1[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolniveauValues2[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="stikproveValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="revDatoValues[item.id]" />
+              </form>
+            </td>
+
+            <!-- tredje række overskrifter -->
+          </tr>
+        </tbody>
+
+        <tr class="headline">
+          <th colspan="3">Bygningsdele</th>
+          <th></th>
+          <th></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+        </tr>
+
+        <!-- trejde række -->
+
+        <tbody>
+          <tr v-for="item in filteredData('Bygningsdele')" :key="item.id">
+            <td>{{ item.label }}</td>
+            <td>
+              <label :for="item.id">
+                <input type="checkbox" :id="item.id" :name="item.id" />
+                {{ item.description }}
+              </label>
+            </td>
+            <td>{{ item.kontrolplansId }}</td>
+            <td>
+              <select>
+                <option
+                  v-for="option in aktørData"
+                  :key="option.id"
+                  value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </td>
+            <td>
+              <select style="width: 100%">
+                <option
+                  v-for="option in aktørData"
+                  :key="option.id"
+                  value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </td>
+
+            <td>
+              <form>
+                <input v-model="udgivelsesDatoValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="versionValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolTypeValues1[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolTypeValues2[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolniveauValues1[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolniveauValues2[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="stikproveValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="revDatoValues[item.id]" />
+              </form>
+            </td>
+
+            <!-- fjerde række overskrifter -->
+          </tr>
+        </tbody>
+
+        <tr class="headline">
+          <th colspan="3">Installationer og håndslukningsudstyr</th>
+          <th></th>
+          <th></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+        </tr>
+
+        <!-- fjerde række -->
+
+        <tbody>
+          <tr
+            v-for="item in filteredData('Håndslukningsudstyr')"
+            :key="item.id"
+          >
+            <td>{{ item.label }}</td>
+            <td>
+              <label :for="item.id">
+                <input type="checkbox" :id="item.id" :name="item.id" />
+                {{ item.description }}
+              </label>
+            </td>
+            <td>{{ item.kontrolplansId }}</td>
+            <td>
+              <select>
+                <option
+                  v-for="option in aktørData"
+                  :key="option.id"
+                  value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </td>
+            <td>
+              <select style="width: 100%">
+                <option
+                  v-for="option in aktørData"
+                  :key="option.id"
+                  value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </td>
+
+            <td>
+              <form>
+                <input v-model="udgivelsesDatoValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="versionValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolTypeValues1[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolTypeValues2[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolniveauValues1[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolniveauValues2[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="stikproveValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="revDatoValues[item.id]" />
+              </form>
+            </td>
+
+            <!-- femte række overskrifter -->
+          </tr>
+        </tbody>
+
+        <tr class="headline">
+          <th colspan="3">
+            Brandtekniske installationer med akkrediteret funktionsafprøvning
+          </th>
+          <th></th>
+          <th></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+          <th v-show="showSelect"></th>
+        </tr>
+
+        <!-- femte række -->
+
+        <tbody>
+          <tr
+            v-for="item in filteredData('Funktionsafprøvning')"
+            :key="item.id"
+          >
+            <td>{{ item.label }}</td>
+            <td>
+              <label :for="item.id">
+                <input type="checkbox" :id="item.id" :name="item.id" />
+                {{ item.description }}
+              </label>
+            </td>
+            <td>{{ item.kontrolplansId }}</td>
+            <td>
+              <select>
+                <option
+                  v-for="option in aktørData"
+                  :key="option.id"
+                  value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </td>
+            <td>
+              <select style="width: 100%">
+                <option
+                  v-for="option in aktørData"
+                  :key="option.id"
+                  value="option"
+                >
+                  {{option}}
+                </option>
+              </select>
+            </td>
+            <td>
+              <form>
+                <input v-model="udgivelsesDatoValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="versionValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolTypeValues1[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolTypeValues2[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolniveauValues1[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="kontrolniveauValues2[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="stikproveValues[item.id]" />
+              </form>
+            </td>
+            <td>
+              <form>
+                <input v-model="revDatoValues[item.id]" />
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
