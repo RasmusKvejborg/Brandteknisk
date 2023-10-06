@@ -145,7 +145,13 @@
             <td>{{ item.label }}</td>
             <td>
               <label :for="item.id">
-                <input type="checkbox" :id="item.id" :name="item.id" />
+                <input
+                  type="checkbox"
+                  :id="item.id"
+                  :name="item.id"
+                  v-model="checkboxValues[item.id]"
+                />
+                <!--v-model="firstItemState" var bare til at teste med ift. det der checkbox over i database -->
                 {{ item.description }}
               </label>
             </td>
@@ -224,7 +230,7 @@
         <!-- -------------  anden række---------------------- -->
 
         <tbody>
-          <tr v-for="item in filteredData('designData')" :key="item.id">
+          <tr v-for="item in filteredData('flugtvejsData')" :key="item.id">
             <td>{{ item.label }}</td>
             <td>
               <label :for="item.id">
@@ -589,5 +595,10 @@
         </tbody>
       </table>
     </div>
+    <button @click="saveData">Lav design</button>
+    <button>Lav projektering</button>
+    <button>Lav udførsel</button>
+
+    <p>{{linkCreated}}</p>
   </body>
 </html>

@@ -77,6 +77,10 @@ select {
 input {
 }
 
+button {
+  margin: 5px;
+}
+
 .headline {
   background-color: var(--headlinebackground);
 }

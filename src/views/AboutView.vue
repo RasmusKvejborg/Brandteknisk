@@ -37,7 +37,7 @@ methods: {
   },
 
   async getCountry(){
-    const docs = await getDocs(query(collection(db, 'users')))
+    const docs = await getDocs(query(collection(db, 'documents')))
 
     // add each doc to array
     docs.forEach((doc) => {
