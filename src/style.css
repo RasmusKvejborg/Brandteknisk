@@ -61,6 +61,7 @@ table {
   margin-bottom: 30px;
   margin-right: 50px;
   max-width: 100%;
+  border-collapse: collapse;
 }
 
 th {
@@ -69,9 +70,8 @@ th {
   /* white-space: snowrap; */
 }
 td {
-  border-right: 1px solid var(--headlinebackground);
+  border: 1px solid var(--headlinebackground);
   padding-inline: 4px;
-  border-collapse: collapse;
   /* white-space: normal; */
 }
 select {
@@ -99,6 +99,12 @@ button {
   justify-content: space-between; /* Adjust spacing between tables */
 }
 
+.kontrolplan-tables {
+  display: flex;
+  justify-content: space-between; /* Adjust spacing between tables */
+  margin-top: 200px;
+}
+
 .blue-header {
   background-color: #007bff;
   white-space: nowrap;
@@ -117,6 +123,13 @@ table tbody tr:nth-child(even) {
   white-space: nowrap; /* Prevent wrapping for this column */
 }
 
+.invisible-column {
+  width: 20px;
+  padding: 0;
+  border: none;
+  visibility: hidden;
+}
+
 /* action button */
 .action-button {
   background-color: #007bff; /* Button background color */
@@ -126,6 +139,7 @@ table tbody tr:nth-child(even) {
   padding: 10px 20px; /* Adjust padding as needed */
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 20px; /* Adjust the font size as needed */
 }
 
 /* Hover effect for action buttons */

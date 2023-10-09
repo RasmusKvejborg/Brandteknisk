@@ -1,8 +1,7 @@
 <template>
   <!-- kan også sige else (hvis ikke "form" fines, at den så loader eller hvad nu) -->
   <div v-if="form">
-    <!-- oversigt over valgte skemaer -->
-
+    <!-- --------------------oversigt over valgte skemaer ------------------------->
     <table>
       <thead>
         <tr class="blue-header">
@@ -17,9 +16,6 @@
       </thead>
       <tbody>
         <tr v-for="(item, key) in filteredFormData" :key="key">
-          {{
-            console.log("hej med dig: ", key)
-          }}
           <td>{{ key }}</td>
           <td>{{ allData.find((data) => data.id === key).description }}</td>
           <td>{{ allData.find((data) => data.id === key).kontrolplansId }}</td>
@@ -30,8 +26,9 @@
         </tr>
       </tbody>
     </table>
+    <!-- --------------------oversigt slut ------------------------->
 
-    <!-- navneindskrivning -->
+    <!---------------------- KONTROLOBJEKTER----------------------------------->
     <table class="tables-container">
       <tbody>
         <tr class="blue-header">
@@ -39,12 +36,19 @@
             KONTROLRAPPORT-INPUT: KONTROLOBJEKTER (her skal indskrives, hvilket
             projektmateriale, der danner baggrund for kontrolrapporten):
           </th>
+          <th class="invisible-column"></th>
+          <th colspan="3">
+            KONTROLRAPPORT-INPUT: KONTROLLANTER (information om
+            kontrollant(er)):
+          </th>
         </tr>
         <tr>
           <th>Dokument id / filnavn:</th>
           <th>Dokument navn / emne:</th>
           <th>Udarbejdet af:</th>
-          <th>Dato: (reduntant)</th>
+          <th>Dato:</th>
+          <th class="invisible-column"></th>
+          <th colspan="3">Kontrollant(er): (Initialer/Navn/Firma)</th>
         </tr>
         <tr>
           <td>
@@ -59,11 +63,31 @@
           <td>
             <input class="full-width-input" />
           </td>
+          <td class="invisible-column"></td>
+          <td>
+            <input class="full-width-input" />
+          </td>
+          <td>
+            <input class="full-width-input" />
+          </td>
+          <td>
+            <input class="full-width-input" />
+          </td>
         </tr>
         <tr>
           <td>
             <input class="full-width-input" />
           </td>
+          <td>
+            <input class="full-width-input" />
+          </td>
+          <td>
+            <input class="full-width-input" />
+          </td>
+          <td>
+            <input class="full-width-input" />
+          </td>
+          <td class="invisible-column"></td>
           <td>
             <input class="full-width-input" />
           </td>
@@ -77,7 +101,7 @@
       </tbody>
 
       <!-- kontrollant lille tabel på linje med navneindskrivning -->
-      <tbody>
+      <!-- <tbody>
         <tr class="blue-header">
           <th colspan="3">
             KONTROLRAPPORT-INPUT: KONTROLLANTER (information om
@@ -109,17 +133,19 @@
             <input class="full-width-input" />
           </td>
         </tr>
-      </tbody>
+      </tbody>-->
     </table>
 
     <!-- ----------------------------------------------------------------------------------------------------------------------------- -->
     <!-- for hver checkbox der er sat flueben i -->
     <div v-for="(data, key) in filteredFormData" :key="key">
-      <table class="tables-container">
+      <table class="kontrolplan-tables">
         <tbody>
-          <!-- KONTROLPLAN First table content -->
-          <tr class="blue-header">
-            <th colspan="5">Kontrolplan</th>
+          <!-- KONTROLPLAN First table content (second table er blandet ind, ) -->
+          <tr>
+            <th class="blue-header" colspan="5">Kontrolplan, {{ key }}</th>
+            <th class="invisible-column"></th>
+            <th class="blue-header" colspan="6">Kontrolrapport, {{ key }}</th>
           </tr>
           <tr>
             <th>Nr.</th>
@@ -127,25 +153,8 @@
             <th>Godkendelseskriterie</th>
             <th>Grundlag for projektering og kontrol</th>
             <th>Dokumentations-form</th>
-          </tr>
 
-          <!-- for loopet skal ændres når jeg laver et table for each checkboxid -->
-          <tr v-for="item in designData[key.toUpperCase()]" :key="item.nr">
-            <td class="no-wrap">{{ item.nr }}</td>
-            <td>{{ item.kontrolpunkt }}</td>
-            <td>{{ item.godkendelsesbeskrivelse }}</td>
-            <td>{{ item.grundlag }}</td>
-            <td>{{ item.dokumentationsform }}</td>
-          </tr>
-        </tbody>
-
-        <tbody>
-          <!-- KONTROLRAPPORT Second table content -->
-          <tr class="blue-header">
-            <th colspan="4">KONTROLRAPPORT</th>
-            <th colspan="2">Opfølgning (hvis "ikke OK")</th>
-          </tr>
-          <tr>
+            <th class="invisible-column"></th>
             <th>Resultat</th>
             <th>Dato</th>
             <th>Kontrollant Initialer</th>
@@ -153,7 +162,14 @@
             <th>Projekterende (init, dato)</th>
             <th>kontrollant (init, dato)</th>
           </tr>
+
           <tr v-for="item in designData[key.toUpperCase()]" :key="item.nr">
+            <td class="no-wrap">{{ item.nr }}</td>
+            <td class="no-wrap">{{ item.kontrolpunkt }}</td>
+            <td>{{ item.godkendelsesbeskrivelse }}</td>
+            <td>{{ item.grundlag }}</td>
+            <td>{{ item.dokumentationsform }}</td>
+            <td class="invisible-column"></td>
             <td>
               <input class="full-width-input" />
             </td>
