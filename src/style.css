@@ -60,6 +60,7 @@ table {
   margin-top: 30px;
   margin-bottom: 30px;
   margin-right: 50px;
+  max-width: 100%;
 }
 
 th {
@@ -71,7 +72,7 @@ td {
   border-right: 1px solid var(--headlinebackground);
   padding-inline: 4px;
   border-collapse: collapse;
-  white-space: nowrap;
+  /* white-space: normal; */
 }
 select {
   width: 100%;
@@ -101,10 +102,19 @@ button {
 .blue-header {
   background-color: #007bff;
   white-space: nowrap;
+  text-align: left;
 }
 
 table tbody {
   margin-right: 15px; /* Adjust the margin as needed */
+}
+
+/* Style table rows alternately for better readability */
+table tbody tr:nth-child(even) {
+  background-color: #f2f2f2; /* Even row background color */
+}
+.no-wrap {
+  white-space: nowrap; /* Prevent wrapping for this column */
 }
 
 /* action button */

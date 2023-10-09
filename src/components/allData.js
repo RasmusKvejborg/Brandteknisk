@@ -211,68 +211,7 @@ export const allData = [
   },
 ];
 
-export const designData = [
-  {
-    DBK: [
-      {
-        nr: "DBK 1",
-        kontrolpunkt: "Anvist anvendelseskategori",
-        godkendelsesbeskrivelse:
-          "Er den anviste anvendelseskategori korrekt ift. personers adfærd og bygningens anvendelse?",
-        grundlag: "DBK Præ-accepterede løsninger",
-        dokumentationsform: "OK / ikke OK / IR",
-      },
-      {
-        nr: "DBK 2",
-        kontrolpunkt: "Anvist risikoklasse",
-        godkendelsesbeskrivelse:
-          "Er den anviste risikoklasse korrekt ift. bygningens udformning og afgrænsninger?",
-        grundlag: "DBK Præ-accepterede løsninger",
-        dokumentationsform: "OK / ikke OK / IR",
-      },
-      {
-        nr: "DBK 3",
-        kontrolpunkt: "Anvist brandklasse",
-        godkendelsesbeskrivelse:
-          "Er den anviste brandklasse korrekt ift. præ-accepterede / ikke præ-accepterede løsninger?",
-        grundlag: "DBK Præ-accepterede løsninger",
-        dokumentationsform: "OK / ikke OK / IR",
-      },
-      {
-        nr: "DBK 4",
-        kontrolpunkt: "Flugtveje",
-        godkendelsesbeskrivelse:
-          "Er der tilstrækkeligt med flugtvejsmuligheder?",
-        grundlag: "DBK Præ-accepterede løsninger",
-        dokumentationsform: "OK / ikke OK / IR",
-      },
-      {
-        nr: "DBK 5",
-        kontrolpunkt: "Bærende konstruktioners brand-modstandsevne",
-        godkendelsesbeskrivelse:
-          "Er der sammenhæng mellem funktionskravene til de bærende konstruktioner og brandplaner og DBK.",
-        grundlag: "DBK Præ-accepterede løsninger",
-        dokumentationsform: "OK / ikke OK / IR",
-      },
-      {
-        nr: "DBK 6",
-        kontrolpunkt: "Antændelse, brand- og røgspredning",
-        godkendelsesbeskrivelse:
-          "Er der sammenhæng mellem funktionskravene til antændelse, brand- og røgspredning og brandplaner samt DBK.",
-        grundlag: "DBK Præ-accepterede løsninger",
-        dokumentationsform: "OK / ikke OK / IR",
-      },
-      {
-        nr: "DBK 7",
-        kontrolpunkt: "Generelt",
-        godkendelsesbeskrivelse:
-          "Kontrollen har ikke givet anledning til andre væsentlige bemærkninger.",
-        grundlag: "DBK Præ-accepterede løsninger",
-        dokumentationsform: "OK / ikke OK",
-      },
-    ],
-  },
-];
+// -----------------------------------------------------DESIGNDATA -----------------------------------------------
 
 // export const allDataStructured = {   // har vist ikke alle designklasser. DBK
 // ITT

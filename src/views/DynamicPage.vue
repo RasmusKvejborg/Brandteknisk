@@ -17,6 +17,9 @@
       </thead>
       <tbody>
         <tr v-for="(item, key) in filteredFormData" :key="key">
+          {{
+            console.log("hej med dig: ", key)
+          }}
           <td>{{ key }}</td>
           <td>{{ allData.find((data) => data.id === key).description }}</td>
           <td>{{ allData.find((data) => data.id === key).kontrolplansId }}</td>
@@ -110,87 +113,69 @@
     </table>
 
     <!-- ----------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- for hver checkbox der er sat flueben i -->
+    <div v-for="(data, key) in filteredFormData" :key="key">
+      <table class="tables-container">
+        <tbody>
+          <!-- KONTROLPLAN First table content -->
+          <tr class="blue-header">
+            <th colspan="5">Kontrolplan</th>
+          </tr>
+          <tr>
+            <th>Nr.</th>
+            <th>Kontrolpunkt</th>
+            <th>Godkendelseskriterie</th>
+            <th>Grundlag for projektering og kontrol</th>
+            <th>Dokumentations-form</th>
+          </tr>
 
-    <table class="tables-container">
-      <tbody>
-        <!-- KONTROLPLAN First table content -->
-        <tr class="blue-header">
-          <th colspan="5">Kontrolplan</th>
-        </tr>
-        <tr>
-          <th>Nr.</th>
-          <th>Kontrolpunkt</th>
-          <th>Godkendelseskriterie</th>
-          <th>Grundlag for projektering og kontrol</th>
-          <th>Dokumentations-form</th>
-        </tr>
+          <!-- for loopet skal ændres når jeg laver et table for each checkboxid -->
+          <tr v-for="item in designData[key.toUpperCase()]" :key="item.nr">
+            <td class="no-wrap">{{ item.nr }}</td>
+            <td>{{ item.kontrolpunkt }}</td>
+            <td>{{ item.godkendelsesbeskrivelse }}</td>
+            <td>{{ item.grundlag }}</td>
+            <td>{{ item.dokumentationsform }}</td>
+          </tr>
+        </tbody>
 
-        <!-- for loopet skal ændres når jeg laver et table for each checkboxid -->
-        <tr v-for="item in designData[0].DBK" :key="item.nr">
-          <td>{{ item.nr }}</td>
-          <td>{{ item.kontrolpunkt }}</td>
-          <td>{{ item.godkendelsesbeskrivelse }}</td>
-          <td>{{ item.grundlag }}</td>
-          <td>{{ item.dokumentationsform }}</td>
-        </tr>
-        <!-- <tr>
-          <td>BSR 1</td>
-          <td>Anvendelseskategori</td>
-          <td>
-            Er den anviste anvendelseskategori korrekt ift. personers adfærd og
-            bygningens anvendelse?
-          </td>
-          <td>BSR Præ-accepterede løsninger</td>
-          <td>OK / ikke OK / IR</td>
-        </tr>
-        <tr>
-          <td>BSR 1</td>
-          <td>Anvendelseskategori</td>
-          <td>
-            Er den anviste anvendelseskategori korrekt ift. personers adfærd og
-            bygningens anvendelse?
-          </td>
-          <td>BSR Præ-accepterede løsninger</td>
-          <td>OK / ikke OK / IR</td>
-        </tr> -->
-      </tbody>
-
-      <tbody>
-        <!-- KONTROLRAPPORT Second table content -->
-        <tr class="blue-header">
-          <th colspan="4">KONTROLRAPPORT</th>
-          <th colspan="2">Opfølgning (hvis "ikke OK")</th>
-        </tr>
-        <tr>
-          <th>Resultat</th>
-          <th>Dato</th>
-          <th>Kontrollant Initialer</th>
-          <th>Bemærkninger</th>
-          <th>Projekterende (init, dato)</th>
-          <th>kontrollant (init, dato)</th>
-        </tr>
-        <tr v-for="item in designData[0].DBK" :key="item.nr">
-          <td>
-            <input class="full-width-input" />
-          </td>
-          <td>
-            <input class="full-width-input" />
-          </td>
-          <td>
-            <input class="full-width-input" />
-          </td>
-          <td>
-            <input class="full-width-input" />
-          </td>
-          <td>
-            <input class="full-width-input" />
-          </td>
-          <td>
-            <input class="full-width-input" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        <tbody>
+          <!-- KONTROLRAPPORT Second table content -->
+          <tr class="blue-header">
+            <th colspan="4">KONTROLRAPPORT</th>
+            <th colspan="2">Opfølgning (hvis "ikke OK")</th>
+          </tr>
+          <tr>
+            <th>Resultat</th>
+            <th>Dato</th>
+            <th>Kontrollant Initialer</th>
+            <th>Bemærkninger</th>
+            <th>Projekterende (init, dato)</th>
+            <th>kontrollant (init, dato)</th>
+          </tr>
+          <tr v-for="item in designData[key.toUpperCase()]" :key="item.nr">
+            <td>
+              <input class="full-width-input" />
+            </td>
+            <td>
+              <input class="full-width-input" />
+            </td>
+            <td>
+              <input class="full-width-input" />
+            </td>
+            <td>
+              <input class="full-width-input" />
+            </td>
+            <td>
+              <input class="full-width-input" />
+            </td>
+            <td>
+              <input class="full-width-input" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <button class="action-button">Indsend</button>
   </div>
@@ -200,7 +185,8 @@
 
 <script>
 // import { allData } from "./HomeView.vue";
-import { allData, designData } from "../components/allData.js";
+import { allData } from "../components/allData.js";
+import { designData } from "../components/designData.js";
 import { db } from "../firebase.js";
 import {
   collection,
@@ -277,6 +263,7 @@ export default {
   },
   // --created--
   created() {
+    console.log(designData.DBK);
     this.fetchData();
   },
 };
