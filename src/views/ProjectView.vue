@@ -1,4 +1,4 @@
-<template src="../components/HomeTemplate.html" />
+<template src="../components/ProjectTemplate.html" />
 <style scoped>
 td {
   white-space: nowrap;
@@ -12,6 +12,10 @@ import { collection, addDoc, getDocs, query } from "firebase/firestore";
 import { db } from "../firebase.js";
 
 export default {
+  props: {
+    parameter: String,
+  },
+
   data() {
     return {
       allData: allData,

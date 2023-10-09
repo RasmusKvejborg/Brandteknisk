@@ -1,5 +1,6 @@
 <template>
   <!-- kan også sige else (hvis ikke "form" fines, at den så loader eller hvad nu) -->
+
   <div v-if="form">
     <!-- --------------------oversigt over valgte skemaer ------------------------->
     <table>
@@ -99,41 +100,6 @@
           </td>
         </tr>
       </tbody>
-
-      <!-- kontrollant lille tabel på linje med navneindskrivning -->
-      <!-- <tbody>
-        <tr class="blue-header">
-          <th colspan="3">
-            KONTROLRAPPORT-INPUT: KONTROLLANTER (information om
-            kontrollant(er)):
-          </th>
-        </tr>
-        <tr>
-          <th colspan="3">Kontrollant(er): (Initialer/Navn/Firma)</th>
-        </tr>
-        <tr>
-          <td>
-            <input class="full-width-input" />
-          </td>
-          <td>
-            <input class="full-width-input" />
-          </td>
-          <td>
-            <input class="full-width-input" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input class="full-width-input" />
-          </td>
-          <td>
-            <input class="full-width-input" />
-          </td>
-          <td>
-            <input class="full-width-input" />
-          </td>
-        </tr>
-      </tbody>-->
     </table>
 
     <!-- ----------------------------------------------------------------------------------------------------------------------------- -->

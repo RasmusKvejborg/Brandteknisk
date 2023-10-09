@@ -1,13 +1,20 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/HomeView.vue";
+import Project from "../views/ProjectView.vue";
 import About from "../views/AboutView.vue";
 import DynamicPage from "../views/DynamicPage.vue";
+import Home from "../views/Home.vue";
 
 const routes = [
   {
     path: "/",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/project/:parameter",
+    name: "project",
+    component: Project,
+    props: true,
   },
   {
     path: "/about",

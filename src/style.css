@@ -1,13 +1,10 @@
 :root {
   --headlinebackground: #555;
   --editableField: #555;
-
-  /* --text-color: #fff; */
 }
 
 body {
   background-color: #1a1a1a;
-  /* color: #fff; */
   font-family: Arial, sans-serif;
 }
 
@@ -68,6 +65,7 @@ th {
   padding-inline: 4px;
   border: 1px solid var(--headlinebackground);
   /* white-space: snowrap; */
+  padding: 10px;
 }
 td {
   border: 1px solid var(--headlinebackground);
