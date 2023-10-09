@@ -2,12 +2,12 @@
   --headlinebackground: #555;
   --editableField: #555;
 
-  --text-color: #fff;
+  /* --text-color: #fff; */
 }
 
 body {
   background-color: #1a1a1a;
-  color: #fff;
+  /* color: #fff; */
   font-family: Arial, sans-serif;
 }
 
@@ -59,11 +59,13 @@ a:hover {
 table {
   margin-top: 30px;
   margin-bottom: 30px;
+  margin-right: 50px;
 }
 
 th {
   padding-inline: 4px;
   border: 1px solid var(--headlinebackground);
+  /* white-space: snowrap; */
 }
 td {
   border-right: 1px solid var(--headlinebackground);
@@ -80,6 +82,7 @@ input {
 
 .full-width-input {
   width: 100%;
+  box-sizing: border-box;
 }
 
 button {
@@ -88,4 +91,39 @@ button {
 
 .headline {
   background-color: var(--headlinebackground);
+}
+
+.tables-container {
+  display: flex;
+  justify-content: space-between; /* Adjust spacing between tables */
+}
+
+.blue-header {
+  background-color: #007bff;
+  white-space: nowrap;
+}
+
+table tbody {
+  margin-right: 15px; /* Adjust the margin as needed */
+}
+
+/* action button */
+.action-button {
+  background-color: #007bff; /* Button background color */
+  color: #fff; /* Button text color */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px; /* Adjust padding as needed */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for action buttons */
+.action-button:hover {
+  background-color: #0056b3; /* Change background color on hover */
+}
+
+/* Add margin to space out buttons if needed */
+.action-button + .action-button {
+  margin-left: 10px; /* Adjust margin as needed */
 }

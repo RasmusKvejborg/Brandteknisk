@@ -1,4 +1,9 @@
 <template src="../components/HomeTemplate.html" />
+<style scoped>
+td {
+  white-space: nowrap;
+}
+</style>
 
 <script>
 // @ is an alias to /src

@@ -210,3 +210,258 @@ export const allData = [
     belongsTo: "Funktionsafprøvning",
   },
 ];
+
+export const designData = [
+  {
+    DBK: [
+      {
+        nr: "DBK 1",
+        kontrolpunkt: "Anvist anvendelseskategori",
+        godkendelsesbeskrivelse:
+          "Er den anviste anvendelseskategori korrekt ift. personers adfærd og bygningens anvendelse?",
+        grundlag: "DBK Præ-accepterede løsninger",
+        dokumentationsform: "OK / ikke OK / IR",
+      },
+      {
+        nr: "DBK 2",
+        kontrolpunkt: "Anvist risikoklasse",
+        godkendelsesbeskrivelse:
+          "Er den anviste risikoklasse korrekt ift. bygningens udformning og afgrænsninger?",
+        grundlag: "DBK Præ-accepterede løsninger",
+        dokumentationsform: "OK / ikke OK / IR",
+      },
+      {
+        nr: "DBK 3",
+        kontrolpunkt: "Anvist brandklasse",
+        godkendelsesbeskrivelse:
+          "Er den anviste brandklasse korrekt ift. præ-accepterede / ikke præ-accepterede løsninger?",
+        grundlag: "DBK Præ-accepterede løsninger",
+        dokumentationsform: "OK / ikke OK / IR",
+      },
+      {
+        nr: "DBK 4",
+        kontrolpunkt: "Flugtveje",
+        godkendelsesbeskrivelse:
+          "Er der tilstrækkeligt med flugtvejsmuligheder?",
+        grundlag: "DBK Præ-accepterede løsninger",
+        dokumentationsform: "OK / ikke OK / IR",
+      },
+      {
+        nr: "DBK 5",
+        kontrolpunkt: "Bærende konstruktioners brand-modstandsevne",
+        godkendelsesbeskrivelse:
+          "Er der sammenhæng mellem funktionskravene til de bærende konstruktioner og brandplaner og DBK.",
+        grundlag: "DBK Præ-accepterede løsninger",
+        dokumentationsform: "OK / ikke OK / IR",
+      },
+      {
+        nr: "DBK 6",
+        kontrolpunkt: "Antændelse, brand- og røgspredning",
+        godkendelsesbeskrivelse:
+          "Er der sammenhæng mellem funktionskravene til antændelse, brand- og røgspredning og brandplaner samt DBK.",
+        grundlag: "DBK Præ-accepterede løsninger",
+        dokumentationsform: "OK / ikke OK / IR",
+      },
+      {
+        nr: "DBK 7",
+        kontrolpunkt: "Generelt",
+        godkendelsesbeskrivelse:
+          "Kontrollen har ikke givet anledning til andre væsentlige bemærkninger.",
+        grundlag: "DBK Præ-accepterede løsninger",
+        dokumentationsform: "OK / ikke OK",
+      },
+    ],
+  },
+];
+
+// export const allDataStructured = {   // har vist ikke alle designklasser. DBK
+// ITT
+// BSR
+// BPLAN
+// PFP
+// KOM
+// FUNK
+// KPLA
+// DKV
+
+//   kom: {
+//     label: "KOM",
+//     description: "Brandteknisk dimensionering",
+//     kontrolplansId: "_KPKR_D_DIM",
+//     belongsTo: "designData",
+//   },
+//   funk: {
+//     label: "FUNK",
+//     description: "Funktionsbeskrivelse",
+//     kontrolplansId: "_KPKR_D_FUNK",
+//     belongsTo: "designData",
+//   },
+//   kpla: {
+//     label: "KPLA",
+//     description: "Brandtekniske kontrolplaner",
+//     kontrolplansId: "_KPKR_D_KPLA",
+//     belongsTo: "designData",
+//   },
+//   dkv: {
+//     label: "DKV",
+//     description: "Drifts-, kontrol-, og vedligeholdelsesplan",
+//     kontrolplansId: "_KPKR_D_DKV",
+//     belongsTo: "designData",
+//   },
+//   flugt: {
+//     label: "FLUGT",
+//     description: "Flugtvejsgange, -arealer og -trapper.",
+//     kontrolplansId: "_KPKR_P_FLUGT",
+//     belongsTo: "flugtvejsData",
+//   },
+//   sikt: {
+//     label: "SIKT",
+//     description: "Sikkerhedstrapper",
+//     kontrolplansId: "_KPKR_P_SIKT",
+//     belongsTo: "flugtvejsData",
+//   },
+//   red: {
+//     label: "RED",
+//     description: "Redningsåbninger",
+//     kontrolplansId: "_KPKR_P_RED",
+//     belongsTo: "flugtvejsData",
+//   },
+//   ind: {
+//     label: "IND",
+//     description: "Indsatsforhold generelt",
+//     kontrolplansId: "_KPKR_P_IND",
+//     belongsTo: "flugtvejsData",
+//   },
+//   adsk: {
+//     label: "ADSK",
+//     description: "Brand- og røgmæssige adskillelser",
+//     kontrolplansId: "_KPKR_P_ADSK",
+//     belongsTo: "Bygningsdele",
+//   },
+//   dør: {
+//     label: "DØR",
+//     description: "Brand- flugtvejsdøre",
+//     kontrolplansId: "_KPKR_P_DØR",
+//     belongsTo: "Bygningsdele",
+//   },
+//   iof: {
+//     label: "IOF",
+//     description: "Indvendige overflader",
+//     kontrolplansId: "_KPKR_P_IOF",
+//     belongsTo: "Bygningsdele",
+//   },
+//   uof: {
+//     label: "UOF",
+//     description: "Udvendige overflader",
+//     kontrolplansId: "_KPKR_P_UOF",
+//     belongsTo: "Bygningsdele",
+//   },
+//   iso: {
+//     label: "ISO",
+//     description: "Isoleringsmaterialer",
+//     kontrolplansId: "_KPKR_P_ISO",
+//     belongsTo: "Bygningsdele",
+//   },
+//   hs: {
+//     label: "HS",
+//     description: "Røgalarmanlæg",
+//     kontrolplansId: "_KPKR_P_HS",
+//     belongsTo: "Håndslukningsudstyr",
+//   },
+//   ru: {
+//     label: "RU",
+//     description: "Vandfyldte slangevinder",
+//     kontrolplansId: "_KPKR_P_RU",
+//     belongsTo: "Håndslukningsudstyr",
+//   },
+//   raa: {
+//     label: "RAA",
+//     description: "Stigrør",
+//     kontrolplansId: "_KPKR_P_RAA",
+//     belongsTo: "Håndslukningsudstyr",
+//   },
+//   vsv: {
+//     label: "VSV",
+//     description: "Brandsikring af ventilationsanlæg",
+//     kontrolplansId: "_KPKR_P_VSV",
+//     belongsTo: "Håndslukningsudstyr",
+//   },
+//   stig: {
+//     label: "STIG",
+//     description: "ABDL-anlæg",
+//     kontrolplansId: "_KPKR_P_STIG",
+//     belongsTo: "Håndslukningsudstyr",
+//   },
+//   vent: {
+//     label: "VENT",
+//     description: "Brandtætning af installationsgennemføringer",
+//     kontrolplansId: "_KPKR_P_VENT",
+//     belongsTo: "Håndslukningsudstyr",
+//   },
+//   abdl: {
+//     label: "ABDL",
+//     description: "Rør- og kabelinstallationer",
+//     kontrolplansId: "_KPKR_P_ABDL",
+//     belongsTo: "Håndslukningsudstyr",
+//   },
+//   btæt: {
+//     label: "BTÆT",
+//     description: "Brandtætning af installationsgennemføringer",
+//     kontrolplansId: "_KPKR_P_BTÆT",
+//     belongsTo: "Håndslukningsudstyr",
+//   },
+//   rør: {
+//     label: "RØR",
+//     description: "Rør- og kabelinstallationer",
+//     kontrolplansId: "_KPKR_P_RØR",
+//     belongsTo: "Håndslukningsudstyr",
+//   },
+//   sys: {
+//     label: "SYS",
+//     description: "Systemintegrationstest",
+//     kontrolplansId: "Udføres af akkrediteret virksomhed",
+//     belongsTo: "Funktionsafprøvning",
+//   },
+//   aba: {
+//     label: "ABA",
+//     description: "Automatisk brandalarmanlæg (ABA-anlæg)",
+//     kontrolplansId: "Udføres af akkrediteret virksomhed",
+//     belongsTo: "Funktionsafprøvning",
+//   },
+//   avs: {
+//     label: "AVS",
+//     description: "Sprinkleranlæg (AVS-anlæg)",
+//     kontrolplansId: "Udføres af akkrediteret virksomhed",
+//     belongsTo: "Funktionsafprøvning",
+//   },
+//   bme: {
+//     label: "BME",
+//     description: "Brandmandselevator",
+//     kontrolplansId: "Udføres af akkrediteret virksomhed",
+//     belongsTo: "Funktionsafprøvning",
+//   },
+//   abv: {
+//     label: "ABV",
+//     description: "Automatisk brandventilation (ABV-anlæg)",
+//     kontrolplansId: "Udføres af akkrediteret virksomhed",
+//     belongsTo: "Funktionsafprøvning",
+//   },
+//   "f&p": {
+//     label: "F&P",
+//     description: "Flugtvejs- og panikbelysning",
+//     kontrolplansId: "Udføres af akkrediteret virksomhed",
+//     belongsTo: "Funktionsafprøvning",
+//   },
+//   va: {
+//     label: "VA",
+//     description: "Varslingsanlæg",
+//     kontrolplansId: "Udføres af akkrediteret virksomhed",
+//     belongsTo: "Funktionsafprøvning",
+//   },
+//   ata: {
+//     label: "ATA",
+//     description: "Automatisk tryksætningsanlæg (ATA-anlæg)",
+//     kontrolplansId: "Udføres af akkrediteret virksomhed",
+//     belongsTo: "Funktionsafprøvning",
+//   },
+// };
