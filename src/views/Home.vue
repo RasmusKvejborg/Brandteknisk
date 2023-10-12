@@ -1,47 +1,45 @@
 <template>
   <div>
-    <button @click="saveProject" class="action-button">
+    <button
+      @click="startAddingProject"
+      class="action-button"
+      v-if="!isAddingProject"
+    >
       + Lav nyt projekt
     </button>
 
-    <h3>igangværende projekter:</h3>
+    <div v-if="isAddingProject">
+      <input v-model="newProjectName" placeholder="Projektnavn" />
+      <button @click="saveProject" class="action-button">Gem projekt</button>
+    </div>
 
-    <div v-for="(project, index) in projects" :key="index">
-      <hr />
-      <h4>{{ project.projectName }}</h4>
+    <h3>Igangværende projekter:</h3>
 
-      Design status: {{ project.designStatus }}
-      <span v-if="project.designStatus === 'Ikke lavet'" class="dot red"></span>
-      <span
-        v-else-if="project.designStatus === 'igangværende'"
-        class="dot yellow"
-      ></span>
-      <span v-else class="dot green"></span>
-      <br />
+    <div
+      v-for="(project, index) in projects"
+      :key="index"
+      class="project-container"
+    >
+      <h4 class="project-title">{{ project.projectName }}</h4>
+      <div class="project-details">
+        <div class="status-group">
+          <div class="status-label">Design status:</div>
+          <span :class="returnColoredDots(project.designStatus)"></span>
+          <div class="status-value">{{ project.designStatus }}</div>
+        </div>
 
-      Projektering status: {{ project.projekteringsStatus }}
-      <span
-        v-if="project.projekteringsStatus === 'Ikke lavet'"
-        class="dot red"
-      ></span>
-      <span
-        v-else-if="project.projekteringsStatus === 'igangværende'"
-        class="dot yellow"
-      ></span>
-      <span v-else class="dot green"></span>
-      <br />
+        <div class="status-group">
+          <div class="status-label">Projektering status:</div>
+          <span :class="returnColoredDots(project.projekteringsStatus)"></span>
+          <div class="status-value">{{ project.projekteringsStatus }}</div>
+        </div>
 
-      Udførsel status: {{ project.udforselsStatus }}
-      <span
-        v-if="project.udforselsStatus === 'Ikke lavet'"
-        class="dot red"
-      ></span>
-      <span
-        v-else-if="project.udforselsStatus === 'igangværende'"
-        class="dot yellow"
-      ></span>
-      <span v-else class="dot green"></span>
-      <hr />
+        <div class="status-group">
+          <div class="status-label">Udførsel status:</div>
+          <span :class="returnColoredDots(project.udforselsStatus)"></span>
+          <div class="status-value">{{ project.udforselsStatus }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -61,19 +59,36 @@ export default {
   data() {
     return {
       projects: null,
+      isAddingProject: false, // Flag to show/hide the input field
+      newProjectName: "",
     };
   },
 
   methods: {
+    returnColoredDots(status) {
+      if (status === "Ikke lavet") {
+        return "dot red";
+      } else if (status === "Igangværende") {
+        return "dot yellow";
+      } else {
+        return "dot green";
+      }
+    },
+
+    startAddingProject() {
+      this.isAddingProject = true;
+    },
+
     async saveProject() {
       const colRef = collection(db, "projects");
 
       const dataObj = {
         accountId: null,
-        projectName: "Projektnavn",
+        projectName: this.newProjectName,
         designStatus: "Ikke lavet",
         projekteringsStatus: "Ikke lavet",
         udforselsStatus: "Ikke lavet",
+        date: new Date(),
       };
 
       const docRef = await addDoc(colRef, dataObj);
@@ -81,6 +96,15 @@ export default {
       console.log("project was created with ID: ", docRef.id); // DET HER SKAL JEG BRUGE
       this.linkCreated = `http://localhost:8080/project/${docRef.id}`;
       window.open(this.linkCreated, "_blank");
+
+      this.fetchData();
+      // Reset the input field and hide it
+      this.cancelAddingProject();
+    },
+
+    cancelAddingProject() {
+      this.newProjectName = ""; // Reset the input field
+      this.isAddingProject = false; // Hide the input field
     },
 
     async fetchData() {
@@ -99,10 +123,13 @@ export default {
               designStatus: data.designStatus,
               projekteringsStatus: data.projekteringsStatus,
               udforselsStatus: data.udforselsStatus,
+              date: data.date,
             };
             projectList.push(project);
           }
         });
+
+        projectList.sort((a, b) => b.date - a.date); // Reverse the order
 
         this.projects = projectList; // Update the projects data property
       } catch (error) {
@@ -119,7 +146,7 @@ export default {
 
 <style>
 button {
-  margin-top: 50px;
+  margin-top: 40px;
 }
 
 .dot {
@@ -140,5 +167,40 @@ button {
 
 .green {
   background-color: green;
+}
+
+.status-group {
+  display: flex;
+  align-items: center;
+}
+
+.status-label {
+  min-width: 160px;
+  font-weight: bold;
+}
+
+.status-value {
+  margin-right: 10px;
+}
+
+.project-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #fff;
+  border-radius: 10px;
+  margin: 10px 0;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.project-title {
+  flex: 1;
+  text-align: left;
+  padding: 10px;
+}
+.project-details {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 </style>

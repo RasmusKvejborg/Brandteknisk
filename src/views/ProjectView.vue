@@ -8,7 +8,16 @@ td {
 <script>
 // @ is an alias to /src
 import { allData } from "@/components/allData.js";
-import { collection, addDoc, getDocs, query } from "firebase/firestore";
+import { updateProjectStatus } from "@/components/utils.js";
+
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "../firebase.js";
 
 export default {
@@ -96,7 +105,7 @@ export default {
     },
 
     // firestore
-    async saveData() {
+    async designSaveData() {
       // burde måske omdøbes til designSaveData()...
       const colRef = collection(db, "documents");
 
@@ -106,6 +115,7 @@ export default {
         udgivelsesDatoValues: this.udgivelsesDatoValues,
         revDatoValues: this.revDatoValues,
         aktorDesignValues: this.aktorDesignValues, // design values. Skal bruge udforsel til de andre.
+        belongsToProjectId: this.parameter,
       };
 
       const docRef = await addDoc(colRef, dataObj);
@@ -113,6 +123,12 @@ export default {
       // console.log("doc was created with ID: ", docRef.id); // DET HER SKAL JEG BRUGE
       this.linkCreated = `http://localhost:8080/form/${docRef.id}`;
       window.open(this.linkCreated, "_blank");
+
+      this.updateStatusIgang("designStatus");
+    },
+
+    async updateStatusIgang(statusToUpdate) {
+      updateProjectStatus(this.parameter, statusToUpdate, "Igangværende");
     },
   },
 };
