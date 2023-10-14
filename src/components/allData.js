@@ -1,5 +1,40 @@
 export const allData = [
   {
+    id: "dbk",
+    label: "DBK",
+    description: "Dokumentation for indplacering i brandklasse",
+    kontrolplansId: "_KPKR_D_DBK",
+    belongsTo: "designData",
+  },
+  {
+    id: "itt",
+    label: "ITT",
+    description: "Dokumentation for indsatstaktisk traditionelt",
+    kontrolplansId: "_KPKR_D_ITT",
+    belongsTo: "designData",
+  },
+  {
+    id: "bsr",
+    label: "BSR",
+    description: "Dokumentation for brandstrategi rapport",
+    kontrolplansId: "_KPKR_D_BSR",
+    belongsTo: "designData",
+  },
+  {
+    id: "bplan",
+    label: "BPLAN",
+    description: "Brandplaner og situationsplan",
+    kontrolplansId: "_KPKR_D_BPLAN",
+    belongsTo: "designData",
+  },
+  {
+    id: "pfp",
+    label: "PFP",
+    description: "Pladsfordelings-, belægnings- og evakueringsplaner",
+    kontrolplansId: "_KPKR_D_PFP",
+    belongsTo: "designData",
+  },
+  {
     id: "kom",
     label: "KOM",
     description: "Brandteknisk dimensionering",

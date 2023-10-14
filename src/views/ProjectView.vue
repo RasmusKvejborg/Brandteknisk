@@ -8,7 +8,10 @@ td {
 <script>
 // @ is an alias to /src
 import { allData } from "@/components/allData.js";
-import { updateProjectStatus } from "@/components/utils.js";
+import {
+  updateProjectStatus,
+  addDocumentIdToProject,
+} from "@/components/utils.js";
 
 import {
   collection,
@@ -125,6 +128,12 @@ export default {
       window.open(this.linkCreated, "_blank");
 
       this.updateStatusIgang("designStatus");
+      this.addDesignIdToProject(this.parameter, docRef.id);
+    },
+
+    // -------- functioner der sendes videre over til utils -------------
+    async addDesignIdToProject(projectId, documentId) {
+      addDocumentIdToProject(projectId, "designDocId", documentId);
     },
 
     async updateStatusIgang(statusToUpdate) {

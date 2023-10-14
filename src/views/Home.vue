@@ -20,26 +20,47 @@
       :key="index"
       class="project-container"
     >
-      <h4 class="project-title">{{ project.projectName }}</h4>
+      <!-- <h4 class="project-title">{{ project.projectName }}</h4> -->
+      <!-- <a class="project-title" :href="google.com">{{ project.projectName }}</a> -->
+      <a
+        class="project-title"
+        :href="`http://localhost:8080/project/${project.id}`"
+        target="_blank"
+        >{{ project.projectName }}</a
+      >
+
       <div class="project-details">
         <div class="status-group">
-          <div class="status-label">Design status:</div>
+          <a
+            class="status-label"
+            v-if="project.designDocId"
+            :href="`http://localhost:8080/form/${project.designDocId}`"
+            target="_blank"
+            >Design</a
+          >
+          <div v-else class="status-label">Design</div>
           <span :class="returnColoredDots(project.designStatus)"></span>
           <div class="status-value">{{ project.designStatus }}</div>
         </div>
 
         <div class="status-group">
-          <div class="status-label">Projektering status:</div>
+          <div class="status-label">Projektering</div>
           <span :class="returnColoredDots(project.projekteringsStatus)"></span>
           <div class="status-value">{{ project.projekteringsStatus }}</div>
         </div>
 
         <div class="status-group">
-          <div class="status-label">Udførsel status:</div>
+          <div class="status-label">Udførsel</div>
           <span :class="returnColoredDots(project.udforselsStatus)"></span>
           <div class="status-value">{{ project.udforselsStatus }}</div>
         </div>
       </div>
+
+      <!-- <a
+        v-if="project.designDocId"
+        :href="`http://localhost:8080/form/${project.designDocId}`"
+        >Design Doc</a
+      > -->
     </div>
   </div>
 </template>
@@ -119,11 +140,13 @@ export default {
           if (docSnapshot.exists()) {
             const data = docSnapshot.data();
             const project = {
+              id: docSnapshot.id, // Include the document ID
               projectName: data.projectName,
               designStatus: data.designStatus,
               projekteringsStatus: data.projekteringsStatus,
               udforselsStatus: data.udforselsStatus,
               date: data.date,
+              designDocId: data.designDocId ? data.designDocId : null,
             };
             projectList.push(project);
           }

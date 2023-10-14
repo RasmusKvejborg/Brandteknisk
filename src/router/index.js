@@ -3,6 +3,7 @@ import Project from "../views/ProjectView.vue";
 import About from "../views/AboutView.vue";
 import DynamicPage from "../views/DynamicPage.vue";
 import Home from "../views/Home.vue";
+import forklaringLaesevejledning from "../views/forklaringLaesevejledning.vue";
 
 const routes = [
   {
@@ -26,6 +27,11 @@ const routes = [
     name: "dynamic-page",
     component: DynamicPage, // Use a dedicated component for dynamic pages
     props: true, // Pass route parameters as props to the component
+  },
+  {
+    path: "/forklaring",
+    name: "forklaring",
+    component: forklaringLaesevejledning,
   },
 ];
 

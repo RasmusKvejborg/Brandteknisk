@@ -167,9 +167,10 @@
             </th>
           </tr>
         </thead>
+
+        <!-- første række -->
         <tbody>
           <tr v-for="item in filteredData('designData')" :key="item.id">
-            <!-- <td>{{ item.label }}</td> -->
             <td>
               <label :for="item.id">
                 <input
@@ -186,6 +187,11 @@
               <form>
                 <input v-model="aktorDesignValues[item.id]" />
               </form>
+
+              <!-- <select name="aktorer" id="aktorer" multiple>
+                <option value="1">aktør 1</option>
+                <option value="1">aktør 1</option>
+              </select> -->
             </td>
             <td></td>
             <td>

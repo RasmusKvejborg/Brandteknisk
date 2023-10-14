@@ -1,8 +1,11 @@
 <template>
-  <!-- kan også sige else (hvis ikke "form" fines, at den så loader eller hvad nu) -->
-
+  <br />
+  <a href="/forklaring" target="_blank">Forklaring / læsevejledning</a>
   <div v-if="formData">
     <!-- --------------------oversigt over valgte skemaer ------------------------->
+    <input type="checkbox" id="toggleSelect" v-model="showSelect" />
+    <label for="toggleSelect">Vis alle felter</label>
+
     <table>
       <thead>
         <tr class="blue-header">
@@ -106,7 +109,8 @@
         <tbody>
           <!-- KONTROLPLAN First table content (second table er blandet ind, ) -->
           <tr>
-            <th class="blue-header" colspan="4">Kontrolplan, {{ key }}</th>
+            <th class="blue-header" colspan="3">Kontrolplan, {{ key }}</th>
+            <th class="blue-header" v-show="showSelect"></th>
             <th class="invisible-column"></th>
             <th class="blue-header" colspan="6">Kontrolrapport, {{ key }}</th>
           </tr>
@@ -114,7 +118,7 @@
             <th>Nr.</th>
             <th>Kontrolpunkt</th>
             <th>Godkendelseskriterie</th>
-            <th>Grundlag for projektering og kontrol</th>
+            <th v-show="showSelect">Grundlag for projektering og kontrol</th>
 
             <th class="invisible-column"></th>
             <th>Resultat</th>
@@ -129,7 +133,7 @@
             <td class="no-wrap">{{ item.nr }}</td>
             <td class="no-wrap">{{ item.kontrolpunkt }}</td>
             <td>{{ item.godkendelsesbeskrivelse }}</td>
-            <td>{{ item.grundlag }}</td>
+            <td v-show="showSelect">{{ item.grundlag }}</td>
             <td class="invisible-column"></td>
 
             <td v-if="item.dokumentationsform === 'OK / ikke OK'">
@@ -212,6 +216,7 @@ export default {
       formData: null,
       allData: allData,
       designData: designData,
+      showSelect: false,
     };
   },
 
@@ -236,6 +241,10 @@ export default {
 
   // --methods--
   methods: {
+    toggleShowSelect() {
+      this.showSelect = !this.showSelect;
+    },
+
     async updateStatusUdfyldt(statusToUpdate) {
       updateProjectStatus(
         this.formData.belongsToProjectId,
