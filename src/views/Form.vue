@@ -9,7 +9,7 @@
     <table>
       <thead>
         <tr class="blue-header">
-          <th>ID</th>
+          <th v-show="showSelect">ID</th>
           <th>Kontrolgenstande</th>
           <th>Kontrolplan ID</th>
           <th>Aktør/firma</th>
@@ -19,8 +19,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, key) in filteredFormData" :key="key">
-          <td>{{ key }}</td>
+        <tr v-for="(item, key) in this.formData.checkBoxValues" :key="key">
+          <td v-show="showSelect">{{ key }}</td>
           <td>{{ allData.find((data) => data.id === key).description }}</td>
           <td>{{ allData.find((data) => data.id === key).kontrolplansId }}</td>
           <td>{{ item.aktorDesignValue }}</td>
@@ -32,7 +32,7 @@
     </table>
     <!-- --------------------oversigt slut ------------------------->
 
-    <div v-for="(data, key) in filteredFormData" :key="key">
+    <div v-for="(data, key) in this.formData.checkBoxValues" :key="key">
       <!---------------------- KONTROLOBJEKTER----------------------------------->
       <table class="tables-container">
         <tbody>
@@ -54,50 +54,50 @@
           </tr>
           <tr>
             <td>
-              <input class="full-width-input" />
+              <input v-model="filnavn1[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="emne1[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="udarbejdet1[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="dato1[key]" class="full-width-input" />
             </td>
             <td class="invisible-column"></td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="initialer1[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="navn1[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="firma1[key]" class="full-width-input" />
             </td>
           </tr>
           <tr>
             <td>
-              <input class="full-width-input" />
+              <input v-model="filnavn2[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="emne2[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="udarbejdet2[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="dato2[key]" class="full-width-input" />
             </td>
             <td class="invisible-column"></td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="initialer2[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="navn2[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="firma2[key]" class="full-width-input" />
             </td>
           </tr>
         </tbody>
@@ -138,53 +138,75 @@
 
             <td v-if="item.dokumentationsform === 'OK / ikke OK'">
               <label>
-                <input type="radio" name="status" value="option1" />OK</label
+                <input
+                  type="radio"
+                  name="status1"
+                  value="option1"
+                  v-model="selectedStatus[item.nr]"
+                />OK</label
               >
               <br />
               <label class="no-wrap">
-                <input type="radio" name="status" value="option1" />Ikke
-                OK</label
+                <input
+                  type="radio"
+                  name="status2"
+                  value="option1"
+                  v-model="selectedStatus[item.nr]"
+                />Ikke OK</label
               >
             </td>
 
             <td v-else>
               <label>
-                <input type="radio" name="status" value="option1" />OK</label
+                <input
+                  type="radio"
+                  name="status3"
+                  value="OK"
+                  v-model="selectedStatus[item.nr]"
+                />OK</label
               >
               <br />
               <label class="no-wrap">
-                <input type="radio" name="status" value="option1" />Ikke
-                OK</label
+                <input
+                  type="radio"
+                  name="status4"
+                  value="Ikke OK"
+                  v-model="selectedStatus[item.nr]"
+                />Ikke OK</label
               >
               <br />
               <label>
-                <input type="radio" name="status" value="option1" />IR</label
+                <input
+                  type="radio"
+                  name="status5"
+                  value="IR"
+                  v-model="selectedStatus[item.nr]"
+                />IR</label
               >
             </td>
 
             <td>
-              <input class="full-width-input" />
+              <input v-model="kontrolDato[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="kontrolInitialer[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="bemerkninger[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="projekterende[key]" class="full-width-input" />
             </td>
             <td>
-              <input class="full-width-input" />
+              <input v-model="kontrollant[key]" class="full-width-input" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <button @click="updateStatusUdfyldt('designStatus')" class="action-button">
-      Indsend
-    </button>
+    <button @click="designSaveResult" class="action-button">Indsend</button>
+    <div v-if="showNotification" class="notification">Data indsendt!</div>
   </div>
 </template>
 
@@ -203,6 +225,7 @@ import {
   querym,
   doc,
   getDoc,
+  setDoc,
 } from "firebase/firestore";
 
 export default {
@@ -217,26 +240,32 @@ export default {
       allData: allData,
       designData: designData,
       showSelect: false,
+      showNotification: false,
+      // inputData
+      // kontrolobjekter
+      filnavn1: {},
+      filnavn2: {},
+      emne1: {},
+      emne2: {},
+      udarbejdet1: {},
+      udarbejdet2: {},
+      dato1: {},
+      dato2: {},
+      initialer1: {},
+      initialer2: {},
+      navn1: {},
+      navn2: {},
+      firma1: {},
+      firma2: {},
+      //kontrolrapport
+      // resultat: {},
+      kontrolDato: {},
+      kontrolInitialer: {},
+      bemerkninger: {},
+      projekterende: {},
+      kontrollant: {},
+      selectedStatus: {},
     };
-  },
-
-  computed: {
-    filteredFormData() {
-      // sorterer alle fra, som ikke har checkbox == true. Kan senere sortere, så det kun er design der tælles med her.
-      const filteredData = {};
-      Object.keys(this.formData.checkBoxValues).forEach((key) => {
-        if (this.formData.checkBoxValues[key]) {
-          filteredData[key] = {
-            checkBoxValue: this.formData.checkBoxValues[key],
-            versionValue: this.formData.versionValues[key],
-            udgivelsesDatoValue: this.formData.udgivelsesDatoValues[key],
-            revDatoValue: this.formData.revDatoValues[key],
-            aktorDesignValue: this.formData.aktorDesignValues[key],
-          };
-        }
-      });
-      return filteredData;
-    },
   },
 
   // --methods--
@@ -258,7 +287,6 @@ export default {
 
       try {
         const docSnapshot = await getDoc(docRef);
-        console.log(docSnapshot.exists());
 
         if (docSnapshot.exists()) {
           // If the document exists, set the user data
@@ -268,7 +296,76 @@ export default {
         console.error("Error fetching user data:", error);
       }
     },
-  },
+    // --------------------------------------designSaveResult-----------------------------------------
+    async designSaveResult() {
+      // Perform your save operation or other tasks here
+
+      // // Check if at least one checkbox is checked
+      // const atLeastOneCheckboxChecked = Object.values(this.checkboxValues).some(
+      //   (value) => value
+      // );
+
+      // if (!atLeastOneCheckboxChecked) {
+      //   // Display an error message or handle the error as needed
+      //   alert(
+      //     "Vælg mindst ét kontrolpunkt i checkboksene ude til højre, under 'Design'"
+      //   );
+      //   return;
+      // }
+
+      // // burde også have et tjek om den findes i forvejen..?
+      // if (this.projectData.designDocId) {
+      //   alert(
+      //     "Design er allerede oprettet, gå til hovedsiden for at se den. (Eller skal det være muligt at overskrive?)"
+      //   );
+      //   return;
+      // }
+
+      const docToUpdate = doc(db, "documents", this.parameter);
+
+      // Define the field you want to update
+      const fieldToUpdate = {
+        kontrolobjekter: {
+          filnavn1: this.filnavn1 || "",
+          filnavn2: this.filnavn2 || "",
+          emne1: this.emne1 || "",
+          emne2: this.emne2 || "",
+          udarbejdet1: this.udarbejdet1 || "",
+          udarbejdet2: this.udarbejdet2 || "",
+          dato1: this.dato1 || "",
+          dato2: this.dato2 || "",
+          initialer1: this.initialer1 || "",
+          initialer2: this.initialer2 || "",
+          navn1: this.navn1 || "",
+          navn2: this.navn2 || "",
+          firma1: this.firma1 || "",
+          firma2: this.firma2 || "",
+        },
+        Kontrolrapport: {
+          kontrolDato: this.kontrolDato || "",
+          initialer: this.initialer || "",
+          bemerkninger: this.bemerkninger || "",
+          projekterende: this.projekterende || "",
+          kontrollant: this.kontrollant || "",
+          selectedStatus: this.selectedStatus || "",
+        },
+      };
+
+      // Use setDoc with merge: true to update the specific field
+      await setDoc(docToUpdate, fieldToUpdate, { merge: true });
+
+      this.updateStatusUdfyldt("designStatus"); //opdaterer til "udfyldt"
+
+      this.showNotification = true; // Show a notification
+
+      setTimeout(() => {
+        this.showNotification = false; // Hide the notification after a delay
+      }, 2000);
+
+      // this.addDesignIdToProject(this.parameter, docRef.id); Denne her vil opdatere, medmindre jeg bruger setDoc og beder den bruge den samme id...
+    },
+    //----------------------- designSaveResult end --------------------------------------------
+  }, // methods end
   // --created--
   created() {
     console.log(designData.DBK);

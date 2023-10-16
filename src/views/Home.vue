@@ -61,6 +61,12 @@
         :href="`http://localhost:8080/form/${project.designDocId}`"
         >Design Doc</a
       > -->
+
+      <a
+        v-if="project.designStatus == 'Udfyldt'"
+        :href="`http://localhost:8080/result/${project.designDocId}`"
+        >Vis resultat</a
+      >
     </div>
   </div>
 </template>
@@ -82,6 +88,7 @@ export default {
       projects: null,
       isAddingProject: false, // Flag to show/hide the input field
       newProjectName: "",
+      // project findes, men bliver ikk initiliseret før fetch
     };
   },
 
@@ -97,6 +104,7 @@ export default {
     },
 
     startAddingProject() {
+      // bare til at vise navneinput
       this.isAddingProject = true;
     },
 
@@ -185,7 +193,7 @@ button {
 }
 
 .yellow {
-  background-color: rgb(253, 228, 126);
+  background-color: rgb(255, 192, 34);
 }
 
 .green {

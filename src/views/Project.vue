@@ -6,6 +6,7 @@ td {
 </style>
 
 <script>
+///////////////////////////////////////////////////////////////////// script ////////////////////////////////////////////////////////////////////////////////
 // @ is an alias to /src
 import { allData } from "@/components/allData.js";
 import {
@@ -16,6 +17,7 @@ import {
 import {
   collection,
   addDoc,
+  getDoc,
   getDocs,
   query,
   updateDoc,
@@ -84,6 +86,7 @@ export default {
       selectedStikprove: null,
       linkCreated: null,
       // firstItemState: false,
+      projectData: null,
     };
   },
 
@@ -91,6 +94,9 @@ export default {
     // Initialize inputValues with udgivelsesDato when the component is created
     this.changeValues("udgivelsesDato", "udgivelsesDatoValues");
     this.changeValues("revDato", "revDatoValues");
+
+    // fetcher lige projectData hver gang man åbner siden, bare for at tjekke, om man har lavet forms(f.eks) design tidligere...
+    this.fetchProjectData();
   },
 
   // computed: {},
@@ -108,28 +114,64 @@ export default {
     },
 
     // firestore
-    async designSaveData() {
-      // burde måske omdøbes til designSaveData()...
+
+    //------------------------------------------------------ save designdata --------------------------------------------------------------------
+    async designSaveForm() {
+      // Check if at least one checkbox is checked
+      const atLeastOneCheckboxChecked = Object.values(this.checkboxValues).some(
+        (value) => value
+      );
+
+      if (!atLeastOneCheckboxChecked) {
+        // Display an error message or handle the error as needed
+        alert(
+          "Vælg mindst ét kontrolpunkt i checkboksene ude til højre, under 'Design'"
+        );
+        return;
+      }
+
+      // burde også have et tjek om den findes i forvejen..?
+      if (this.projectData.designDocId) {
+        alert(
+          "Design er allerede oprettet, gå til hovedsiden for at se den. (Eller skal det være muligt at overskrive?)"
+        );
+        return;
+      }
+
       const colRef = collection(db, "documents");
 
       const dataObj = {
-        checkBoxValues: this.checkboxValues,
-        versionValues: this.versionValues,
-        udgivelsesDatoValues: this.udgivelsesDatoValues,
-        revDatoValues: this.revDatoValues,
-        aktorDesignValues: this.aktorDesignValues, // design values. Skal bruge udforsel til de andre.
+        checkBoxValues: {},
+        versionValues: {},
+        udgivelsesDatoValues: {},
+        revDatoValues: {},
+        aktorDesignValues: {},
         belongsToProjectId: this.parameter,
       };
+
+      // Loop through the keys in checkboxValues and add data to dataObj
+      Object.keys(this.checkboxValues).forEach((key) => {
+        if (this.checkboxValues[key]) {
+          dataObj.checkBoxValues[key] = this.checkboxValues[key];
+          dataObj.versionValues[key] = this.versionValues[key] || ""; // jeg bør have et tjeck inden, der siger om dataene findes, så det ikke koster et write.
+          dataObj.udgivelsesDatoValues[key] =
+            this.udgivelsesDatoValues[key] || "";
+          dataObj.revDatoValues[key] = this.revDatoValues[key] || "";
+          dataObj.aktorDesignValues[key] = this.aktorDesignValues[key] || "";
+        }
+      });
 
       const docRef = await addDoc(colRef, dataObj);
 
       // console.log("doc was created with ID: ", docRef.id); // DET HER SKAL JEG BRUGE
       this.linkCreated = `http://localhost:8080/form/${docRef.id}`;
+
       window.open(this.linkCreated, "_blank");
 
       this.updateStatusIgang("designStatus");
       this.addDesignIdToProject(this.parameter, docRef.id);
     },
+    //----------------------- save designdata end ---------------------------------------------------------------------------------
 
     // -------- functioner der sendes videre over til utils -------------
     async addDesignIdToProject(projectId, documentId) {
@@ -138,6 +180,21 @@ export default {
 
     async updateStatusIgang(statusToUpdate) {
       updateProjectStatus(this.parameter, statusToUpdate, "Igangværende");
+    },
+
+    async fetchProjectData() {
+      const docRef = doc(db, "projects", this.parameter);
+
+      try {
+        const docSnapshot = await getDoc(docRef);
+
+        if (docSnapshot.exists()) {
+          // If the document exists, set the  data
+          this.projectData = docSnapshot.data();
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
     },
   },
 };
