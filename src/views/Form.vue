@@ -19,20 +19,20 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, key) in this.formData.checkBoxValues" :key="key">
+        <tr v-for="key in this.formData.checkBoxValues" :key="key">
           <td v-show="showSelect">{{ key }}</td>
           <td>{{ allData.find((data) => data.id === key).description }}</td>
           <td>{{ allData.find((data) => data.id === key).kontrolplansId }}</td>
-          <td>{{ item.aktorDesignValue }}</td>
-          <td>{{ item.udgivelsesDatoValue }}</td>
-          <td>{{ item.versionValue }}</td>
-          <td>{{ item.revDatoValue }}</td>
+          <td>{{ formData.aktorDesignValues[key] || "" }}</td>
+          <td>{{ formData.udgivelsesDatoValues[key] || "" }}</td>
+          <td>{{ formData.versionValues[key] || "" }}</td>
+          <td>{{ formData.revDatoValues[key] || "" }}</td>
         </tr>
       </tbody>
     </table>
     <!-- --------------------oversigt slut ------------------------->
 
-    <div v-for="(data, key) in this.formData.checkBoxValues" :key="key">
+    <div v-for="key in this.formData.checkBoxValues" :key="key">
       <!---------------------- KONTROLOBJEKTER----------------------------------->
       <table class="tables-container">
         <tbody>
@@ -140,8 +140,8 @@
               <label>
                 <input
                   type="radio"
-                  name="status1"
-                  value="option1"
+                  :name="'status' + item.nr"
+                  value="OK"
                   v-model="selectedStatus[item.nr]"
                 />OK</label
               >
@@ -149,8 +149,8 @@
               <label class="no-wrap">
                 <input
                   type="radio"
-                  name="status2"
-                  value="option1"
+                  :name="'status' + item.nr"
+                  value="Ikke OK"
                   v-model="selectedStatus[item.nr]"
                 />Ikke OK</label
               >
@@ -160,7 +160,7 @@
               <label>
                 <input
                   type="radio"
-                  name="status3"
+                  :name="'status' + item.nr"
                   value="OK"
                   v-model="selectedStatus[item.nr]"
                 />OK</label
@@ -169,7 +169,7 @@
               <label class="no-wrap">
                 <input
                   type="radio"
-                  name="status4"
+                  :name="'status' + item.nr"
                   value="Ikke OK"
                   v-model="selectedStatus[item.nr]"
                 />Ikke OK</label
@@ -178,7 +178,7 @@
               <label>
                 <input
                   type="radio"
-                  name="status5"
+                  :name="'status' + item.nr"
                   value="IR"
                   v-model="selectedStatus[item.nr]"
                 />IR</label
@@ -186,19 +186,25 @@
             </td>
 
             <td>
-              <input v-model="kontrolDato[key]" class="full-width-input" />
+              <input v-model="kontrolDato[item.nr]" class="full-width-input" />
             </td>
             <td>
-              <input v-model="kontrolInitialer[key]" class="full-width-input" />
+              <input
+                v-model="kontrolInitialer[item.nr]"
+                class="full-width-input"
+              />
             </td>
             <td>
-              <input v-model="bemerkninger[key]" class="full-width-input" />
+              <input v-model="bemerkninger[item.nr]" class="full-width-input" />
             </td>
             <td>
-              <input v-model="projekterende[key]" class="full-width-input" />
+              <input
+                v-model="projekterende[item.nr]"
+                class="full-width-input"
+              />
             </td>
             <td>
-              <input v-model="kontrollant[key]" class="full-width-input" />
+              <input v-model="kontrollant[item.nr]" class="full-width-input" />
             </td>
           </tr>
         </tbody>

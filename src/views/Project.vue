@@ -141,7 +141,7 @@ export default {
       const colRef = collection(db, "documents");
 
       const dataObj = {
-        checkBoxValues: {},
+        checkBoxValues: [], // laver dette til et array for at få en fast rækkefølge
         versionValues: {},
         udgivelsesDatoValues: {},
         revDatoValues: {},
@@ -149,11 +149,14 @@ export default {
         belongsToProjectId: this.parameter,
       };
 
-      // Loop through the keys in checkboxValues and add data to dataObj
+      // Loop through the keys in checkboxValues and add checked keys to the array
       Object.keys(this.checkboxValues).forEach((key) => {
         if (this.checkboxValues[key]) {
-          dataObj.checkBoxValues[key] = this.checkboxValues[key];
-          dataObj.versionValues[key] = this.versionValues[key] || ""; // jeg bør have et tjeck inden, der siger om dataene findes, så det ikke koster et write.
+          // Push the checked key into the checkBoxValues array
+          dataObj.checkBoxValues.push(key);
+
+          // Add other data fields to other arrays similarly
+          dataObj.versionValues[key] = this.versionValues[key] || "";
           dataObj.udgivelsesDatoValues[key] =
             this.udgivelsesDatoValues[key] || "";
           dataObj.revDatoValues[key] = this.revDatoValues[key] || "";
@@ -171,7 +174,7 @@ export default {
       this.updateStatusIgang("designStatus");
       this.addDesignIdToProject(this.parameter, docRef.id);
     },
-    //----------------------- save designdata end ---------------------------------------------------------------------------------
+    //----------------------- save designform end ---------------------------------------------------------------------------------
 
     // -------- functioner der sendes videre over til utils -------------
     async addDesignIdToProject(projectId, documentId) {
@@ -181,6 +184,8 @@ export default {
     async updateStatusIgang(statusToUpdate) {
       updateProjectStatus(this.parameter, statusToUpdate, "Igangværende");
     },
+
+    //----------------------------------------------------------
 
     async fetchProjectData() {
       const docRef = doc(db, "projects", this.parameter);

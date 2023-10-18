@@ -5,14 +5,15 @@
     <!-- --------------------oversigt over valgte skemaer ------------------------->
     <input type="checkbox" id="toggleSelect" v-model="showSelect" />
     <label for="toggleSelect">Vis alle felter</label>
+    <br />
 
     <download-button
       class="action-button"
-      dom="#result"
+      dom="#resultPrinted"
       name="myFilename.pdf"
     />
 
-    <div id="result">
+    <div id="resultPrinted">
       <table>
         <thead>
           <tr class="blue-header">
@@ -26,34 +27,29 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, key) in filteredFormData" :key="key">
+          <tr v-for="key in this.formData.checkBoxValues" :key="key">
             <td v-show="showSelect">{{ key }}</td>
             <td>{{ allData.find((data) => data.id === key).description }}</td>
             <td>
               {{ allData.find((data) => data.id === key).kontrolplansId }}
             </td>
-            <td>{{ item.aktorDesignValue }}</td>
-            <td>{{ item.udgivelsesDatoValue }}</td>
-            <td>{{ item.versionValue }}</td>
-            <td>{{ item.revDatoValue }}</td>
+            <td>{{ formData.aktorDesignValues[key] || "" }}</td>
+            <td>{{ formData.udgivelsesDatoValues[key] || "" }}</td>
+            <td>{{ formData.versionValues[key] || "" }}</td>
+            <td>{{ formData.revDatoValues[key] || "" }}</td>
           </tr>
         </tbody>
       </table>
       <!-- --------------------oversigt slut ------------------------->
 
-      <div v-for="(data, key) in filteredFormData" :key="key">
+      <div v-for="key in this.formData.checkBoxValues" :key="key">
         <!---------------------- KONTROLOBJEKTER----------------------------------->
         <table class="tables-container">
           <tbody>
             <tr class="blue-header">
-              <th colspan="4">
-                KONTROLOBJEKTER (her skal indskrives, hvilket projektmateriale,
-                der danner baggrund for kontrolrapporten):
-              </th>
+              <th colspan="4">Kontrolobjekter</th>
               <th class="invisible-column"></th>
-              <th colspan="3">
-                KONTROLLANTER (information om kontrollant(er)):
-              </th>
+              <th colspan="3">Kontrollanter</th>
             </tr>
             <tr>
               <th>Dokument id / filnavn:</th>
@@ -65,50 +61,50 @@
             </tr>
             <tr>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.filnavn1[key] }}
               </td>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.emne1[key] }}
               </td>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.udarbejdet1[key] }}
               </td>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.dato1[key] }}
               </td>
               <td class="invisible-column"></td>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.initialer1[key] }}
               </td>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.navn1[key] }}
               </td>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.firma1[key] }}
               </td>
             </tr>
             <tr>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.filnavn2[key] }}
               </td>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.emne2[key] }}
               </td>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.udarbejdet2[key] }}
               </td>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.dato2[key] }}
               </td>
               <td class="invisible-column"></td>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.initialer2[key] }}
               </td>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.navn2[key] }}
               </td>
               <td>
-                <input class="full-width-input" />
+                {{ formData.kontrolobjekter.firma2[key] }}
               </td>
             </tr>
           </tbody>
@@ -147,56 +143,37 @@
               <td v-show="showSelect">{{ item.grundlag }}</td>
               <td class="invisible-column"></td>
 
-              <td v-if="item.dokumentationsform === 'OK / ikke OK'">
-                <label>
-                  <input type="radio" name="status" value="option1" />OK</label
-                >
-                <br />
-                <label class="no-wrap">
-                  <input type="radio" name="status" value="option1" />Ikke
-                  OK</label
-                >
-              </td>
-
-              <td v-else>
-                <label>
-                  <input type="radio" name="status" value="option1" />OK</label
-                >
-                <br />
-                <label class="no-wrap">
-                  <input type="radio" name="status" value="option1" />Ikke
-                  OK</label
-                >
-                <br />
-                <label>
-                  <input type="radio" name="status" value="option1" />IR</label
-                >
+              <td>
+                <!-- {{ item.kontrolrapport }} -->
+                hej
               </td>
 
               <td>
-                <input class="full-width-input" />
+                <input v-model="kontrolDato[key]" class="full-width-input" />
               </td>
               <td>
-                <input class="full-width-input" />
+                <input
+                  v-model="kontrolInitialer[key]"
+                  class="full-width-input"
+                />
               </td>
               <td>
-                <input class="full-width-input" />
+                <input v-model="bemerkninger[key]" class="full-width-input" />
               </td>
               <td>
-                <input class="full-width-input" />
+                <input v-model="projekterende[key]" class="full-width-input" />
               </td>
               <td>
-                <input class="full-width-input" />
+                <input v-model="kontrollant[key]" class="full-width-input" />
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-    </div>
 
-    <button @click="updateStatusUdfyldt('designStatus')" class="action-button">
-      Indsend
-    </button>
+      <button @click="designSaveResult" class="action-button">Indsend</button>
+      <div v-if="showNotification" class="notification">Data indsendt!</div>
+    </div>
   </div>
 </template>
 
@@ -215,6 +192,7 @@ import {
   querym,
   doc,
   getDoc,
+  setDoc,
 } from "firebase/firestore";
 import DownloadButton from "../components/DownloadButton";
 
@@ -223,7 +201,6 @@ export default {
   components: {
     DownloadButton,
   },
-
   props: {
     parameter: String, // Define a prop to receive the route parameter
   },
@@ -235,26 +212,32 @@ export default {
       allData: allData,
       designData: designData,
       showSelect: false,
+      showNotification: false,
+      // inputData
+      // kontrolobjekter
+      filnavn1: {},
+      filnavn2: {},
+      emne1: {},
+      emne2: {},
+      udarbejdet1: {},
+      udarbejdet2: {},
+      dato1: {},
+      dato2: {},
+      initialer1: {},
+      initialer2: {},
+      navn1: {},
+      navn2: {},
+      firma1: {},
+      firma2: {},
+      //kontrolrapport
+      // resultat: {},
+      kontrolDato: {},
+      kontrolInitialer: {},
+      bemerkninger: {},
+      projekterende: {},
+      kontrollant: {},
+      selectedStatus: {},
     };
-  },
-
-  computed: {
-    filteredFormData() {
-      // sorterer alle fra, som ikke har checkbox == true. Kan senere sortere, så det kun er design der tælles med her.
-      const filteredData = {};
-      Object.keys(this.formData.checkBoxValues).forEach((key) => {
-        if (this.formData.checkBoxValues[key]) {
-          filteredData[key] = {
-            checkBoxValue: this.formData.checkBoxValues[key],
-            versionValue: this.formData.versionValues[key],
-            udgivelsesDatoValue: this.formData.udgivelsesDatoValues[key],
-            revDatoValue: this.formData.revDatoValues[key],
-            aktorDesignValue: this.formData.aktorDesignValues[key],
-          };
-        }
-      });
-      return filteredData;
-    },
   },
 
   // --methods--
@@ -276,7 +259,6 @@ export default {
 
       try {
         const docSnapshot = await getDoc(docRef);
-        console.log(docSnapshot.exists());
 
         if (docSnapshot.exists()) {
           // If the document exists, set the user data
@@ -286,10 +268,9 @@ export default {
         console.error("Error fetching user data:", error);
       }
     },
-  },
+  }, // methods end
   // --created--
   created() {
-    console.log(designData.DBK);
     this.fetchData();
   },
 };
