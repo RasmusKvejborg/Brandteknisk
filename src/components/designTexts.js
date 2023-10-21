@@ -1,4 +1,4 @@
-export const designData = {
+export const designTexts = {
   DBK: [
     {
       nr: "DBK1",

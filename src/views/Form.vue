@@ -21,8 +21,12 @@
       <tbody>
         <tr v-for="key in this.formData.checkBoxValues" :key="key">
           <td v-show="showSelect">{{ key }}</td>
-          <td>{{ allData.find((data) => data.id === key).description }}</td>
-          <td>{{ allData.find((data) => data.id === key).kontrolplansId }}</td>
+          <td>
+            {{ projectTexts.find((data) => data.id === key).description }}
+          </td>
+          <td>
+            {{ projectTexts.find((data) => data.id === key).kontrolplansId }}
+          </td>
           <td>{{ formData.aktorDesignValues[key] || "" }}</td>
           <td>{{ formData.udgivelsesDatoValues[key] || "" }}</td>
           <td>{{ formData.versionValues[key] || "" }}</td>
@@ -129,7 +133,7 @@
             <th>kontrollant (init, dato)</th>
           </tr>
 
-          <tr v-for="item in designData[key.toUpperCase()]" :key="item.nr">
+          <tr v-for="item in designTexts[key.toUpperCase()]" :key="item.nr">
             <td class="no-wrap">{{ item.nr }}</td>
             <td class="no-wrap">{{ item.kontrolpunkt }}</td>
             <td>{{ item.godkendelsesbeskrivelse }}</td>
@@ -219,9 +223,8 @@
 <!-------------------------------- script --------------------------------------->
 
 <script>
-// import { allData } from "./HomeView.vue";
-import { allData } from "../components/allData.js";
-import { designData } from "../components/designData.js";
+import { projectTexts } from "../components/projectTexts.js";
+import { designTexts } from "../components/designTexts.js";
 import { db } from "../firebase.js";
 import { updateProjectStatus } from "@/components/utils.js";
 import {
@@ -243,8 +246,8 @@ export default {
   data() {
     return {
       formData: null,
-      allData: allData,
-      designData: designData,
+      projectTexts: projectTexts,
+      designTexts: designTexts,
       showSelect: false,
       showNotification: false,
       // inputData
@@ -349,7 +352,7 @@ export default {
         },
         Kontrolrapport: {
           kontrolDato: this.kontrolDato || "",
-          initialer: this.initialer || "",
+          kontrolInitialer: this.kontrolInitialer || "",
           bemerkninger: this.bemerkninger || "",
           projekterende: this.projekterende || "",
           kontrollant: this.kontrollant || "",
@@ -374,7 +377,7 @@ export default {
   }, // methods end
   // --created--
   created() {
-    console.log(designData.DBK);
+    console.log(designTexts.DBK);
     this.fetchData();
   },
 };

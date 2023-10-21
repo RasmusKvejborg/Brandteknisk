@@ -2,7 +2,6 @@
   <br />
   <a href="/forklaring" target="_blank">Forklaring / læsevejledning</a>
   <div v-if="formData">
-    <!-- --------------------oversigt over valgte skemaer ------------------------->
     <input type="checkbox" id="toggleSelect" v-model="showSelect" />
     <label for="toggleSelect">Vis alle felter</label>
     <br />
@@ -26,12 +25,16 @@
             <th>Rev.dato</th>
           </tr>
         </thead>
+        <!-- --------------------oversigt over valgte skemaer ------------------------->
+
         <tbody>
           <tr v-for="key in this.formData.checkBoxValues" :key="key">
             <td v-show="showSelect">{{ key }}</td>
-            <td>{{ allData.find((data) => data.id === key).description }}</td>
             <td>
-              {{ allData.find((data) => data.id === key).kontrolplansId }}
+              {{ projectTexts.find((data) => data.id === key).description }}
+            </td>
+            <td>
+              {{ projectTexts.find((data) => data.id === key).kontrolplansId }}
             </td>
             <td>{{ formData.aktorDesignValues[key] || "" }}</td>
             <td>{{ formData.udgivelsesDatoValues[key] || "" }}</td>
@@ -129,60 +132,52 @@
 
               <th class="invisible-column"></th>
               <th>Resultat</th>
-              <th>Dato</th>
-              <th>Kontrollant Initialer</th>
-              <th>Bemærkninger</th>
-              <th>Projekterende (init, dato)</th>
-              <th>kontrollant (init, dato)</th>
             </tr>
 
-            <tr v-for="item in designData[key.toUpperCase()]" :key="item.nr">
+            <tr v-for="item in designTexts[key.toUpperCase()]" :key="item.nr">
               <td class="no-wrap">{{ item.nr }}</td>
-              <td class="no-wrap">{{ item.kontrolpunkt }}</td>
+              <td>{{ item.kontrolpunkt }}</td>
               <td>{{ item.godkendelsesbeskrivelse }}</td>
               <td v-show="showSelect">{{ item.grundlag }}</td>
               <td class="invisible-column"></td>
 
-              <td>
-                <!-- {{ item.kontrolrapport }} -->
-                hej
-              </td>
+              <td class="no-wrap">
+                {{ this.formData.Kontrolrapport.selectedStatus[item.nr] }}
+                <br />
+                Dato: {{ this.formData.Kontrolrapport.kontrolDato[item.nr] }}
+                <br />
+                Kontrollant Initialer:
+                {{ this.formData.Kontrolrapport.kontrolInitialer[item.nr] }}
+                <br />
+                Bemærkninger:
+                {{ this.formData.Kontrolrapport.bemerkninger[item.nr] }}
 
-              <td>
-                <input v-model="kontrolDato[key]" class="full-width-input" />
-              </td>
-              <td>
-                <input
-                  v-model="kontrolInitialer[key]"
-                  class="full-width-input"
-                />
-              </td>
-              <td>
-                <input v-model="bemerkninger[key]" class="full-width-input" />
-              </td>
-              <td>
-                <input v-model="projekterende[key]" class="full-width-input" />
-              </td>
-              <td>
-                <input v-model="kontrollant[key]" class="full-width-input" />
+                <br />
+                Projekterende (init, dato):
+                {{ this.formData.Kontrolrapport.projekterende[item.nr] }}
+
+                <br />
+                kontrollant (init, dato):
+                {{ this.formData.Kontrolrapport.kontrollant[item.nr] }}
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-
-      <button @click="designSaveResult" class="action-button">Indsend</button>
-      <div v-if="showNotification" class="notification">Data indsendt!</div>
     </div>
+    <download-button
+      class="action-button"
+      dom="#resultPrinted"
+      name="myFilename.pdf"
+    />
   </div>
 </template>
 
 <!-------------------------------- script --------------------------------------->
 
 <script>
-// import { allData } from "./HomeView.vue";
-import { allData } from "../components/allData.js";
-import { designData } from "../components/designData.js";
+import { projectTexts } from "../components/projectTexts.js";
+import { designTexts } from "../components/designTexts.js";
 import { db } from "../firebase.js";
 import { updateProjectStatus } from "@/components/utils.js";
 import {
@@ -209,8 +204,8 @@ export default {
   data() {
     return {
       formData: null,
-      allData: allData,
-      designData: designData,
+      projectTexts: projectTexts,
+      designTexts: designTexts,
       showSelect: false,
       showNotification: false,
       // inputData
@@ -230,7 +225,7 @@ export default {
       firma1: {},
       firma2: {},
       //kontrolrapport
-      // resultat: {},
+      // resultat: {}, // tror nedenstående er kopieret fra Form.. Men bruges statid pga colonnerne er der stadig
       kontrolDato: {},
       kontrolInitialer: {},
       bemerkninger: {},

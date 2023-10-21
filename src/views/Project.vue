@@ -8,7 +8,7 @@ td {
 <script>
 ///////////////////////////////////////////////////////////////////// script ////////////////////////////////////////////////////////////////////////////////
 // @ is an alias to /src
-import { allData } from "@/components/allData.js";
+import { projectTexts } from "@/components/projectTexts.js";
 import {
   updateProjectStatus,
   addDocumentIdToProject,
@@ -32,7 +32,7 @@ export default {
 
   data() {
     return {
-      allData: allData,
+      projectTexts: projectTexts,
 
       aktørData: ["", "aktør1", "aktør2", "aktør3", "aktør4"],
       versionData: ["", "Version 1", "Version 2", "Version 3", "Version 4"],
@@ -103,19 +103,19 @@ export default {
 
   methods: {
     changeValues(fieldName, targetDataName) {
-      for (const item of this.allData) {
+      for (const item of this.projectTexts) {
         this[targetDataName][item.id] = this[fieldName];
       }
     },
 
     filteredData(belongsTo) {
-      // filtrerer lige allData, så det kun er designData, der vises i designtabellen osv.
-      return this.allData.filter((item) => item.belongsTo === belongsTo);
+      // filtrerer lige projectTexts, så det kun er designTexts, der vises i designtabellen osv.
+      return this.projectTexts.filter((item) => item.belongsTo === belongsTo);
     },
 
     // firestore
 
-    //------------------------------------------------------ save designdata --------------------------------------------------------------------
+    //------------------------------------------------------ save designTexts --------------------------------------------------------------------
     async designSaveForm() {
       // Check if at least one checkbox is checked
       const atLeastOneCheckboxChecked = Object.values(this.checkboxValues).some(
