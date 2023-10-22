@@ -1,7 +1,10 @@
 <template>
   <br />
   <a href="/forklaring" target="_blank">Forklaring / læsevejledning</a>
-  <div v-if="formData">
+  <div v-if="!formData">
+    <p>Henter data...</p>
+  </div>
+  <div v-else>
     <input type="checkbox" id="toggleSelect" v-model="showSelect" />
     <label for="toggleSelect">Vis alle felter</label>
     <br />

@@ -9,7 +9,11 @@
     </button>
 
     <div v-if="isAddingProject">
-      <input v-model="newProjectName" placeholder="Projektnavn" />
+      <input
+        v-model="newProjectName"
+        placeholder="Projektnavn"
+        class="project-input"
+      />
       <button @click="saveProject" class="action-button">Gem projekt</button>
     </div>
 
@@ -222,6 +226,16 @@ button {
   margin: 10px 0;
   padding: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.project-input {
+  flex: 1; /* Take up the available space */
+  padding: 10px;
+  border: 1px solid var(--headlinebackground);
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  margin-right: 10px; /* Add some spacing between the input and button */
 }
 
 .project-title {

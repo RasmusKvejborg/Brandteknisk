@@ -1,7 +1,10 @@
 <template>
   <br />
   <a href="/forklaring" target="_blank">Forklaring / læsevejledning</a>
-  <div v-if="formData">
+  <div v-if="!formData">
+    <p>Henter data...</p>
+  </div>
+  <div v-else>
     <!-- --------------------oversigt over valgte skemaer ------------------------->
     <input type="checkbox" id="toggleSelect" v-model="showSelect" />
     <label for="toggleSelect">Vis alle felter</label>
@@ -38,7 +41,7 @@
 
     <div v-for="key in this.formData.checkBoxValues" :key="key">
       <!---------------------- KONTROLOBJEKTER----------------------------------->
-      <table class="tables-container">
+      <table class="table-container">
         <tbody>
           <tr class="blue-header">
             <th colspan="4">
@@ -71,7 +74,13 @@
             </td>
             <td class="invisible-column"></td>
             <td>
-              <input v-model="initialer1[key]" class="full-width-input" />
+              <input
+                v-on:change="
+                  bindingInitialer('initialer1', 'kontrolInitialer', key)
+                "
+                v-model="initialer1[key]"
+                class="full-width-input"
+              />
             </td>
             <td>
               <input v-model="navn1[key]" class="full-width-input" />
@@ -135,8 +144,8 @@
 
           <tr v-for="item in designTexts[key.toUpperCase()]" :key="item.nr">
             <td class="no-wrap">{{ item.nr }}</td>
-            <td class="no-wrap">{{ item.kontrolpunkt }}</td>
-            <td>{{ item.godkendelsesbeskrivelse }}</td>
+            <td class="min-width180">{{ item.kontrolpunkt }}</td>
+            <td class="min-width250">{{ item.godkendelsesbeskrivelse }}</td>
             <td v-show="showSelect">{{ item.grundlag }}</td>
             <td class="invisible-column"></td>
 
@@ -279,6 +288,12 @@ export default {
 
   // --methods--
   methods: {
+    bindingInitialer(fieldName, targetDataName, key) {
+      for (const item of this.designTexts[key.toUpperCase()]) {
+        this[targetDataName][item.nr] = this[fieldName][key];
+      }
+    },
+
     toggleShowSelect() {
       this.showSelect = !this.showSelect;
     },
@@ -377,7 +392,6 @@ export default {
   }, // methods end
   // --created--
   created() {
-    console.log(designTexts.DBK);
     this.fetchData();
   },
 };

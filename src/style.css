@@ -57,13 +57,9 @@ th {
 td {
   border: 1px solid var(--headlinebackground);
   padding-inline: 4px;
-  /* white-space: normal; */
 }
 select {
   width: 100%;
-}
-
-input {
 }
 
 .full-width-input {
@@ -84,10 +80,25 @@ button {
   justify-content: space-between; /* Adjust spacing between tables */
 }
 
+/* .no-border {
+  border: none;
+}
+.no-border td {
+  border: none;
+} */
+
 .kontrolplan-tables {
   display: flex;
   justify-content: space-between; /* Adjust spacing between tables */
 }
+
+/* det her fjerner også alle borders fra td's som er indeni det table... */
+/* .kontrolplan-tables td {
+  border: none;
+}
+.kontrolplan-tables th {
+  border: none;
+} */
 
 .blue-header {
   background-color: #007bff;
@@ -105,6 +116,14 @@ table tbody tr:nth-child(even) {
 }
 .no-wrap {
   white-space: nowrap; /* Prevent wrapping for this column */
+}
+
+.min-width180 {
+  min-width: 160px;
+}
+
+.min-width250 {
+  min-width: 260px;
 }
 
 .invisible-column {
