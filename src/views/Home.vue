@@ -28,7 +28,7 @@
       <!-- <a class="project-title" :href="google.com">{{ project.projectName }}</a> -->
       <a
         class="project-title"
-        :href="`http://localhost:8080/project/${project.id}`"
+        :href="`/project/${project.id}`"
         target="_blank"
         >{{ project.projectName }}</a
       >
@@ -38,7 +38,7 @@
           <a
             class="status-label"
             v-if="project.designDocId"
-            :href="`http://localhost:8080/form/${project.designDocId}`"
+            :href="`/form/${project.designDocId}`"
             target="_blank"
             >Design</a
           >
@@ -62,13 +62,13 @@
 
       <!-- <a
         v-if="project.designDocId"
-        :href="`http://localhost:8080/form/${project.designDocId}`"
+        :href="`/form/${project.designDocId}`"
         >Design Doc</a
       > -->
 
       <a
         v-if="project.designStatus == 'Udfyldt'"
-        :href="`http://localhost:8080/result/${project.designDocId}`"
+        :href="`/result/${project.designDocId}`"
         >Vis resultat</a
       >
     </div>
@@ -127,7 +127,7 @@ export default {
       const docRef = await addDoc(colRef, dataObj);
 
       console.log("project was created with ID: ", docRef.id); // DET HER SKAL JEG BRUGE
-      this.linkCreated = `http://localhost:8080/project/${docRef.id}`;
+      this.linkCreated = `/project/${docRef.id}`;
       window.open(this.linkCreated, "_blank");
 
       this.fetchData();

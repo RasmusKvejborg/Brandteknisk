@@ -167,7 +167,7 @@ export default {
       const docRef = await addDoc(colRef, dataObj);
 
       // console.log("doc was created with ID: ", docRef.id); // DET HER SKAL JEG BRUGE
-      this.linkCreated = `http://localhost:8080/form/${docRef.id}`;
+      this.linkCreated = `/form/${docRef.id}`;
 
       window.open(this.linkCreated, "_blank");
 

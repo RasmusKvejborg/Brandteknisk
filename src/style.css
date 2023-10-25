@@ -46,6 +46,7 @@ table {
   margin-right: 50px;
   max-width: 100%;
   border-collapse: collapse;
+  width: 100%; /* Make the table responsive */
 }
 
 th {
@@ -88,7 +89,7 @@ button {
 } */
 
 .kontrolplan-tables {
-  display: flex;
+  /* display: flex;  det gav sgu et margin*/
   justify-content: space-between; /* Adjust spacing between tables */
 }
 
@@ -112,7 +113,7 @@ table tbody {
 
 /* Style table rows alternately for better readability */
 table tbody tr:nth-child(even) {
-  background-color: #f2f2f2; /* Even row background color */
+  background-color: #f8f8f8; /* Softer background color for alternating rows */
 }
 .no-wrap {
   white-space: nowrap; /* Prevent wrapping for this column */
