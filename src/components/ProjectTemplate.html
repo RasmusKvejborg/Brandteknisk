@@ -564,15 +564,13 @@
       </table>
     </div>
     <button @click="designSaveForm" class="action-button">Lav design</button>
+    <div v-if="showNotification" class="notification">Data indsendt!</div>
 
     <!-- den updateStatus skal selvfølelig ind i proejkteringsSaveData som i designSaveForm -->
-    <button
-      @click="updateStatusIgang('projekteringsStatus')"
-      class="action-button"
-    >
+    <button @click="OpenLink('FormProjektering')" class="action-button">
       Lav projektering
     </button>
-    <button @click="updateStatusIgang('udførselStatus')" class="action-button">
+    <button @click="OpenLink('FormUdforsel')" class="action-button">
       Lav udførsel
     </button>
 

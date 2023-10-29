@@ -1,6 +1,6 @@
 <template>
   <br />
-  <a href="/forklaring">Forklaring / læsevejledning</a>
+  <a href="/forklaring" target="_blank">Forklaring / læsevejledning</a>
   <div v-if="!formData">
     <p>Henter data...</p>
   </div>
@@ -41,82 +41,90 @@
 
     <div v-for="key in this.formData.checkBoxValues" :key="key">
       <!---------------------- KONTROLOBJEKTER----------------------------------->
-      <!-- <table class="table-container">
-        <tbody>
-          <tr class="blue-header">
-            <th colspan="4">
-              KONTROLOBJEKTER (her skal indskrives, hvilket projektmateriale,
-              der danner baggrund for kontrolrapporten):
-            </th>
-            <th class="invisible-column"></th>
-            <th colspan="3">KONTROLLANTER (information om kontrollant(er)):</th>
-          </tr>
-          <tr>
-            <th>Dokument id / filnavn:</th>
-            <th>Dokument navn / emne:</th>
-            <th>Udarbejdet af:</th>
-            <th>Dato:</th>
-            <th class="invisible-column"></th>
-            <th colspan="3">Kontrollant(er): (Initialer/Navn/Firma)</th>
-          </tr>
-          <tr>
-            <td>
-              <input v-model="filnavn1[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="emne1[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="udarbejdet1[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="dato1[key]" class="full-width-input" />
-            </td>
-            <td class="invisible-column"></td>
-            <td>
-              <input
-                v-on:change="
-                  bindingInitialer('initialer1', 'kontrolInitialer', key)
-                "
-                v-model="initialer1[key]"
-                class="full-width-input"
-              />
-            </td>
-            <td>
-              <input v-model="navn1[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="firma1[key]" class="full-width-input" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input v-model="filnavn2[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="emne2[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="udarbejdet2[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="dato2[key]" class="full-width-input" />
-            </td>
-            <td class="invisible-column"></td>
-            <td>
-              <input v-model="initialer2[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="navn2[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="firma2[key]" class="full-width-input" />
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
+      <!-- ku ikke en måde at skrive forloopet+1, så har lavet koden 2 gange. I et for loop nederst, hvis numberOfFormsPerKey eksisterer, og ellers bare en enkelt gang her øverst. -->
+      <div class="square-container" v-if="!numberOfFormsPerKey[key]">
+        <div class="section">
+          <p>Kontrolobjekter:</p>
+          <div class="input-section">
+            <label for="filnavn">Dokument id / filnavn:</label>
+            <input type="text" v-model="filnavn1[key + 1]" id="filnavn" />
+          </div>
+          <div class="input-section">
+            <label for="emne">Dokument navn / emne:</label>
+            <input type="text" v-model="emne1[key + 1]" id="emne" />
+          </div>
+          <div class="input-section">
+            <label for="udarbejdet">Udarbejdet af:</label>
+            <input type="text" v-model="udarbejdet1[key + 1]" id="udarbejdet" />
+          </div>
+          <div class="input-section">
+            <label for="dato">Dato:</label>
+            <input type="text" v-model="dato1[key + 1]" id="dato" />
+          </div>
+        </div>
+        <div class="section">
+          <p>Kontrollant:</p>
+          <div class="input-section">
+            <label for="initialer">Kontrollant - Initialer:</label>
+            <input type="text" v-model="initialer1[key + 1]" id="initialer" />
+          </div>
+          <div class="input-section">
+            <label for="navn">Kontrollant - Navn:</label>
+            <input type="text" v-model="navn1[key + 1]" id="navn" />
+          </div>
+          <div class="input-section">
+            <label for="firma">Kontrollant - Firma:</label>
+            <input type="text" v-model="firma1[key + 1]" id="firma" />
+          </div>
+        </div>
+      </div>
 
-      <!-- ----------------------------------------------------------------------------------------------------------------------------- -->
+      <div v-else>
+        <div v-for="n in numberOfFormsPerKey[key]" class="square-container">
+          <div class="section">
+            <p>Kontrolobjekter:</p>
+            <div class="input-section">
+              <label for="filnavn">Dokument id / filnavn:</label>
+              <input type="text" v-model="filnavn1[key + n]" id="filnavn" />
+            </div>
+            <div class="input-section">
+              <label for="emne">Dokument navn / emne:</label>
+              <input type="text" v-model="emne1[key + n]" id="emne" />
+            </div>
+            <div class="input-section">
+              <label for="udarbejdet">Udarbejdet af:</label>
+              <input
+                type="text"
+                v-model="udarbejdet1[key + n]"
+                id="udarbejdet"
+              />
+            </div>
+            <div class="input-section">
+              <label for="dato">Dato:</label>
+              <input type="text" v-model="dato1[key + n]" id="dato" />
+            </div>
+          </div>
+          <div class="section">
+            <p>Kontrollant:</p>
+            <div class="input-section">
+              <label for="initialer">Kontrollant - Initialer:</label>
+              <input type="text" v-model="initialer1[key + n]" id="initialer" />
+            </div>
+            <div class="input-section">
+              <label for="navn">Kontrollant - Navn:</label>
+              <input type="text" v-model="navn1[key + n]" id="navn" />
+            </div>
+            <div class="input-section">
+              <label for="firma">Kontrollant - Firma:</label>
+              <input type="text" v-model="firma1[key + n]" id="firma" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button @click="incrementForms(key)">+</button>
+
+      <!-- slut kontrolobj SLUT----------------------------------------------------------------------------------------------------------------------------- -->
       <!-- for hver checkbox der er sat flueben i -->
       <table class="kontrolplan-tables">
         <tbody>
@@ -136,10 +144,10 @@
             <th class="invisible-column"></th>
             <th>Resultat</th>
             <th class="width1">Dato</th>
-            <!-- <th class="width1">Kontrollant Initialer</th> -->
-            <th class="min-width250">Bemærkninger</th>
-            <!-- <th>Projekterende (init, dato)</th>
-            <th>kontrollant (init, dato)</th> -->
+            <th class="width1">Kontrollant Initialer</th>
+            <th>Bemærkninger</th>
+            <th>Projekterende (init, dato)</th>
+            <th>kontrollant (init, dato)</th>
           </tr>
 
           <tr v-for="item in designTexts[key.toUpperCase()]" :key="item.nr">
@@ -201,19 +209,23 @@
             <td>
               <input v-model="kontrolDato[item.nr]" class="full-width-input" />
             </td>
-
             <td>
-              <p>{{ bemerkninger[item.nr] }}</p>
-              <div>
-                <input
-                  v-model="bemerkninger[item.nr]"
-                  placeholder="initial"
-                  class="min-width40"
-                />
-                <!-- <div></div> -->
-                <input v-model="bemerkninger[item.nr]" />
-                <button class="block-button">send</button>
-              </div>
+              <input
+                v-model="kontrolInitialer[item.nr]"
+                class="full-width-input"
+              />
+            </td>
+            <td>
+              <input v-model="bemerkninger[item.nr]" class="full-width-input" />
+            </td>
+            <td>
+              <input
+                v-model="projekterende[item.nr]"
+                class="full-width-input"
+              />
+            </td>
+            <td>
+              <input v-model="kontrollant[item.nr]" class="full-width-input" />
             </td>
           </tr>
         </tbody>
@@ -258,27 +270,21 @@ export default {
       // inputData
       // kontrolobjekter
       filnavn1: {},
-      filnavn2: {},
       emne1: {},
-      emne2: {},
       udarbejdet1: {},
-      udarbejdet2: {},
       dato1: {},
-      dato2: {},
       initialer1: {},
-      initialer2: {},
       navn1: {},
-      navn2: {},
       firma1: {},
-      firma2: {},
       //kontrolrapport
       // resultat: {},
       kontrolDato: {},
       kontrolInitialer: {},
-      bemerkninger: { BSR1: "RK, 28/10 bemærkning" },
+      bemerkninger: {},
       projekterende: {},
       kontrollant: {},
       selectedStatus: {},
+      numberOfFormsPerKey: {},
     };
   },
 
@@ -381,11 +387,19 @@ export default {
       setTimeout(() => {
         this.showNotification = false; // Hide the notification after a delay
       }, 2000);
-
       // this.addDesignIdToProject(this.parameter, docRef.id); Denne her vil opdatere, medmindre jeg bruger setDoc og beder den bruge den samme id...
+    },
+
+    incrementForms(key) {
+      if (this.numberOfFormsPerKey[key]) {
+        this.numberOfFormsPerKey[key]++;
+      } else {
+        this.numberOfFormsPerKey[key] = 2;
+      }
     },
     //----------------------- designSaveResult end --------------------------------------------
   }, // methods end
+
   // --created--
   created() {
     this.fetchData();

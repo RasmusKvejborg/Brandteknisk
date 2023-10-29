@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import Project from "../views/Project.vue";
 import About from "../views/About.vue";
 import Form from "../views/Form.vue";
+import FormProjektering from "../views/FormProjektering.vue";
+import FormUdforsel from "../views/FormUdforsel.vue";
+
 import Result from "../views/Result.vue";
 
 import Home from "../views/Home.vue";
@@ -29,6 +32,18 @@ const routes = [
     name: "form-page",
     component: Form, // Use a dedicated component for dynamic pages
     props: true, // Pass route parameters as props to the component
+  },
+  {
+    path: "/FormProjektering/:parameter",
+    name: "projektform-page",
+    component: FormProjektering,
+    props: true,
+  },
+  {
+    path: "/FormUdforsel/:parameter",
+    name: "FormUdforsel-page",
+    component: FormUdforsel,
+    props: true,
   },
   {
     path: "/forklaring",

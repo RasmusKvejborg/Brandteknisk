@@ -87,6 +87,7 @@ export default {
       linkCreated: null,
       // firstItemState: false,
       projectData: null,
+      showNotification: false,
     };
   },
 
@@ -114,6 +115,20 @@ export default {
     },
 
     // firestore
+
+    async OpenLink(subpage) {
+      // skal lige ha et andet navn
+      // await this.designSaveForm();
+
+      // await this.fetchProjectData();
+      console.log(this.projectData.designDocId);
+
+      this.linkCreated = `/${subpage}/${this.projectData.designDocId}`;
+
+      window.open(this.linkCreated, "_blank");
+
+      // updateStatusIgang('udførselStatus')
+    },
 
     //------------------------------------------------------ save designTexts --------------------------------------------------------------------
     async designSaveForm() {
@@ -167,12 +182,20 @@ export default {
       const docRef = await addDoc(colRef, dataObj);
 
       // console.log("doc was created with ID: ", docRef.id); // DET HER SKAL JEG BRUGE
-      this.linkCreated = `/form/${docRef.id}`;
+      // this.linkCreated = `/form/${docRef.id}`;
 
-      window.open(this.linkCreated, "_blank");
+      this.projectData.designDocId = docRef.id;
+
+      // window.open(this.linkCreated, "_blank");
 
       this.updateStatusIgang("designStatus");
       this.addDesignIdToProject(this.parameter, docRef.id);
+
+      this.showNotification = true; // Show a notification. Burde smide det her ind i en kode, da jeg har det samme flere steder.
+
+      setTimeout(() => {
+        this.showNotification = false; // Hide the notification after a delay
+      }, 2000);
     },
     //----------------------- save designform end ---------------------------------------------------------------------------------
 

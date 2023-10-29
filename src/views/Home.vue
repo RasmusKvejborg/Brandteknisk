@@ -24,14 +24,9 @@
       :key="index"
       class="project-container"
     >
-      <!-- <h4 class="project-title">{{ project.projectName }}</h4> -->
-      <!-- <a class="project-title" :href="google.com">{{ project.projectName }}</a> -->
-      <a
-        class="project-title"
-        :href="`/project/${project.id}`"
-        target="_blank"
-        >{{ project.projectName }}</a
-      >
+      <a class="project-title" :href="`/project/${project.id}`">{{
+        project.projectName
+      }}</a>
 
       <div class="project-details">
         <div class="status-group">
@@ -39,32 +34,40 @@
             class="status-label"
             v-if="project.designDocId"
             :href="`/form/${project.designDocId}`"
-            target="_blank"
             >Design</a
           >
+
           <div v-else class="status-label">Design</div>
           <span :class="returnColoredDots(project.designStatus)"></span>
           <div class="status-value">{{ project.designStatus }}</div>
         </div>
 
         <div class="status-group">
-          <div class="status-label">Projektering</div>
-          <span :class="returnColoredDots(project.projekteringsStatus)"></span>
+          <a
+            class="status-label"
+            v-if="project.designDocId"
+            :href="`/FormProjektering/${project.designDocId}`"
+            >Projektering</a
+          >
+
+          <div v-else class="status-label">Projektering</div>
+          <span :class="returnColoredDots('Ikke lavet')"></span>
           <div class="status-value">{{ project.projekteringsStatus }}</div>
         </div>
 
         <div class="status-group">
-          <div class="status-label">Udførsel</div>
-          <span :class="returnColoredDots(project.udforselsStatus)"></span>
+          <a
+            class="status-label"
+            v-if="project.designDocId"
+            :href="`/FormUdforsel/${project.designDocId}`"
+            >Udførsel</a
+          >
+
+          <div v-else class="status-label">Udførsel</div>
+          <span :class="returnColoredDots('Ikke lavet')"></span>
           <div class="status-value">{{ project.udforselsStatus }}</div>
         </div>
       </div>
-
-      <!-- <a
-        v-if="project.designDocId"
-        :href="`/form/${project.designDocId}`"
-        >Design Doc</a
-      > -->
 
       <a
         v-if="project.designStatus == 'Udfyldt'"
@@ -136,6 +139,7 @@ export default {
     },
 
     cancelAddingProject() {
+      // ku jo os bruges hvis man fortryder og vil trykke kryds...
       this.newProjectName = ""; // Reset the input field
       this.isAddingProject = false; // Hide the input field
     },
@@ -179,7 +183,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 button {
   margin-top: 40px;
 }

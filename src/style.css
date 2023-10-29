@@ -11,27 +11,11 @@ body {
 input[type="text"],
 input[type="password"] {
   width: 100%;
-  padding: 10px;
+  padding: 5px;
   border: 1px solid var(--headlinebackground);
   border-radius: 5px;
   background-color: #222;
   color: #fff;
-  margin-bottom: 20px;
-}
-
-button[type="submit"] {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button[type="submit"]:hover {
-  background-color: #0056b3;
 }
 
 .menu {
@@ -68,10 +52,6 @@ select {
   box-sizing: border-box;
 }
 
-button {
-  margin: 5px;
-}
-
 .headline {
   background-color: var(--headlinebackground);
 }
@@ -81,29 +61,20 @@ button {
   justify-content: space-between; /* Adjust spacing between tables */
 }
 
-/* .no-border {
-  border: none;
-}
-.no-border td {
-  border: none;
-} */
-
 .kontrolplan-tables {
   /* display: flex;  det gav sgu et margin*/
   justify-content: space-between; /* Adjust spacing between tables */
 }
 
-/* det her fjerner også alle borders fra td's som er indeni det table... */
-/* .kontrolplan-tables td {
-  border: none;
-}
-.kontrolplan-tables th {
-  border: none;
-} */
-
 .blue-header {
   background-color: #007bff;
   /* white-space: nowrap; */
+  text-align: left;
+}
+.browngrey-header {
+  background-color: #2d2821;
+  /* white-space: nowrap; */
+  color: #f8f2f2;
   text-align: left;
 }
 
@@ -117,6 +88,20 @@ table tbody tr:nth-child(even) {
 }
 .no-wrap {
   white-space: nowrap; /* Prevent wrapping for this column */
+}
+
+.block-button {
+  display: block;
+  margin-block: 7px; /* Adjust the margin-top as needed to control the spacing */
+}
+
+.width1 {
+  width: 1%;
+  /* max-width: 50px; */
+}
+
+.min-width40 {
+  max-width: 30px;
 }
 
 .min-width180 {
@@ -168,4 +153,27 @@ table tbody tr:nth-child(even) {
   color: white;
   padding: 10px;
   border-radius: 5px;
+}
+
+.square-container {
+  background-color: #3e3e3e;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.section {
+  flex: 1;
+  padding: 10px;
+  margin-inline: 50px;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.square-container p {
+  margin-block: 5px; /* Adjust the margin as needed */
 }

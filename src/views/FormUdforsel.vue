@@ -1,6 +1,6 @@
 <template>
   <br />
-  <a href="/forklaring">Forklaring / læsevejledning</a>
+  <a href="/forklaring" target="_blank">Forklaring / læsevejledning</a>
   <div v-if="!formData">
     <p>Henter data...</p>
   </div>
@@ -41,7 +41,7 @@
 
     <div v-for="key in this.formData.checkBoxValues" :key="key">
       <!---------------------- KONTROLOBJEKTER----------------------------------->
-      <!-- <table class="table-container">
+      <table class="table-container">
         <tbody>
           <tr class="blue-header">
             <th colspan="4">
@@ -114,7 +114,7 @@
             </td>
           </tr>
         </tbody>
-      </table> -->
+      </table>
 
       <!-- ----------------------------------------------------------------------------------------------------------------------------- -->
       <!-- for hver checkbox der er sat flueben i -->
@@ -136,10 +136,10 @@
             <th class="invisible-column"></th>
             <th>Resultat</th>
             <th class="width1">Dato</th>
-            <!-- <th class="width1">Kontrollant Initialer</th> -->
-            <th class="min-width250">Bemærkninger</th>
-            <!-- <th>Projekterende (init, dato)</th>
-            <th>kontrollant (init, dato)</th> -->
+            <th class="width1">Kontrollant Initialer</th>
+            <th>Bemærkninger</th>
+            <th>Projekterende (init, dato)</th>
+            <th>kontrollant (init, dato)</th>
           </tr>
 
           <tr v-for="item in designTexts[key.toUpperCase()]" :key="item.nr">
@@ -201,19 +201,23 @@
             <td>
               <input v-model="kontrolDato[item.nr]" class="full-width-input" />
             </td>
-
             <td>
-              <p>{{ bemerkninger[item.nr] }}</p>
-              <div>
-                <input
-                  v-model="bemerkninger[item.nr]"
-                  placeholder="initial"
-                  class="min-width40"
-                />
-                <!-- <div></div> -->
-                <input v-model="bemerkninger[item.nr]" />
-                <button class="block-button">send</button>
-              </div>
+              <input
+                v-model="kontrolInitialer[item.nr]"
+                class="full-width-input"
+              />
+            </td>
+            <td>
+              <input v-model="bemerkninger[item.nr]" class="full-width-input" />
+            </td>
+            <td>
+              <input
+                v-model="projekterende[item.nr]"
+                class="full-width-input"
+              />
+            </td>
+            <td>
+              <input v-model="kontrollant[item.nr]" class="full-width-input" />
             </td>
           </tr>
         </tbody>
@@ -275,7 +279,7 @@ export default {
       // resultat: {},
       kontrolDato: {},
       kontrolInitialer: {},
-      bemerkninger: { BSR1: "RK, 28/10 bemærkning" },
+      bemerkninger: {},
       projekterende: {},
       kontrollant: {},
       selectedStatus: {},

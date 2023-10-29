@@ -18,7 +18,7 @@
     <div id="resultPrinted">
       <table>
         <thead>
-          <tr class="blue-header">
+          <tr class="browngrey-header">
             <th v-show="showSelect">ID</th>
             <th>Kontrolgenstande</th>
             <th>Kontrolplan ID</th>
@@ -52,7 +52,7 @@
         <!---------------------- KONTROLOBJEKTER----------------------------------->
         <table class="tables-container">
           <tbody>
-            <tr class="blue-header">
+            <tr class="browngrey-header">
               <th colspan="4">Kontrolobjekter</th>
               <th class="invisible-column"></th>
               <th colspan="3">Kontrollanter</th>
@@ -122,10 +122,14 @@
           <tbody>
             <!-- KONTROLPLAN First table content (second table er blandet ind, ) -->
             <tr>
-              <th class="blue-header" colspan="3">Kontrolplan, {{ key }}</th>
-              <th class="blue-header" v-show="showSelect"></th>
+              <th class="browngrey-header" colspan="3">
+                Kontrolplan, {{ key }}
+              </th>
+              <th class="browngrey-header" v-show="showSelect"></th>
               <th class="invisible-column"></th>
-              <th class="blue-header" colspan="6">Kontrolrapport, {{ key }}</th>
+              <th class="browngrey-header" colspan="6">
+                Kontrolrapport, {{ key }}
+              </th>
             </tr>
             <tr>
               <th>Nr.</th>
