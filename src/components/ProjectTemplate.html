@@ -563,19 +563,23 @@
         </tbody>
       </table>
     </div>
-    <button @click="designSaveForm" class="action-button">Lav design</button>
-    <div v-if="showNotification" class="notification">Data indsendt!</div>
 
-    <!-- den updateStatus skal selvfølelig ind i proejkteringsSaveData som i designSaveForm -->
-    <button @click="OpenLink('FormProjektering')" class="action-button">
-      Lav projektering
-    </button>
-    <button @click="OpenLink('FormUdforsel')" class="action-button">
-      Lav udførsel
-    </button>
+    <div v-if="projectData && projectData.designDocId">
+      <button @click="OpenLink('Form')" class="action-button">
+        Gå til Design >
+      </button>
+      <button @click="OpenLink('FormProjektering')" class="action-button">
+        Gå til projektering >
+      </button>
+      <button @click="OpenLink('FormUdforsel')" class="action-button">
+        Gå til udførsel >
+      </button>
+    </div>
+    <button @click="designSaveForm" class="action-button">Gem</button>
+    <div v-if="showNotification" class="notification">Data gemt!</div>
 
-    <p v-if="linkCreated">
+    <!-- <p v-if="linkCreated">
       kopier dette link og del med dem der skal udfylde det: {{linkCreated}}
-    </p>
+    </p> -->
   </body>
 </html>

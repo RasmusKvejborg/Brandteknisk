@@ -40,82 +40,6 @@
     <!-- --------------------oversigt slut ------------------------->
 
     <div v-for="key in this.formData.checkBoxValues" :key="key">
-      <!---------------------- KONTROLOBJEKTER----------------------------------->
-      <!-- <table class="table-container">
-        <tbody>
-          <tr class="blue-header">
-            <th colspan="4">
-              KONTROLOBJEKTER (her skal indskrives, hvilket projektmateriale,
-              der danner baggrund for kontrolrapporten):
-            </th>
-            <th class="invisible-column"></th>
-            <th colspan="3">KONTROLLANTER (information om kontrollant(er)):</th>
-          </tr>
-          <tr>
-            <th>Dokument id / filnavn:</th>
-            <th>Dokument navn / emne:</th>
-            <th>Udarbejdet af:</th>
-            <th>Dato:</th>
-            <th class="invisible-column"></th>
-            <th colspan="3">Kontrollant(er): (Initialer/Navn/Firma)</th>
-          </tr>
-          <tr>
-            <td>
-              <input v-model="filnavn1[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="emne1[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="udarbejdet1[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="dato1[key]" class="full-width-input" />
-            </td>
-            <td class="invisible-column"></td>
-            <td>
-              <input
-                v-on:change="
-                  bindingInitialer('initialer1', 'kontrolInitialer', key)
-                "
-                v-model="initialer1[key]"
-                class="full-width-input"
-              />
-            </td>
-            <td>
-              <input v-model="navn1[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="firma1[key]" class="full-width-input" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input v-model="filnavn2[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="emne2[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="udarbejdet2[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="dato2[key]" class="full-width-input" />
-            </td>
-            <td class="invisible-column"></td>
-            <td>
-              <input v-model="initialer2[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="navn2[key]" class="full-width-input" />
-            </td>
-            <td>
-              <input v-model="firma2[key]" class="full-width-input" />
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
-
       <!-- ----------------------------------------------------------------------------------------------------------------------------- -->
       <!-- for hver checkbox der er sat flueben i -->
       <table class="kontrolplan-tables">
@@ -135,7 +59,6 @@
 
             <th class="invisible-column"></th>
             <th>Resultat</th>
-            <th class="width1">Dato</th>
             <!-- <th class="width1">Kontrollant Initialer</th> -->
             <th class="min-width250">Bemærkninger</th>
             <!-- <th>Projekterende (init, dato)</th>
@@ -143,7 +66,7 @@
           </tr>
 
           <tr v-for="item in designTexts[key.toUpperCase()]" :key="item.nr">
-            <td class="no-wrap">{{ item.nr }}</td>
+            <td class="item-nr">{{ item.nr }}</td>
             <td class="min-width180">{{ item.kontrolpunkt }}</td>
             <td class="min-width250">{{ item.godkendelsesbeskrivelse }}</td>
             <td v-show="showSelect">{{ item.grundlag }}</td>
@@ -199,20 +122,52 @@
             </td>
 
             <td>
-              <input v-model="kontrolDato[item.nr]" class="full-width-input" />
-            </td>
+              <div class="margin-bemerkninger">
+                <div class="sameline-ptag">
+                  <p
+                    v-if="
+                      formData &&
+                      formData.Kontrolrapport &&
+                      formData.Kontrolrapport.kontrolDato &&
+                      formData.Kontrolrapport.kontrolDato[item.nr] &&
+                      formData.Kontrolrapport.kontrolInitialer[item.nr]
+                    "
+                  >
+                    {{
+                      `${formData.Kontrolrapport.kontrolDato[item.nr]}&nbsp${
+                        formData.Kontrolrapport.kontrolInitialer[item.nr]
+                      }:&nbsp`
+                    }}
+                  </p>
 
-            <td>
-              <p>{{ bemerkninger[item.nr] }}</p>
-              <div>
-                <input
+                  <p
+                    v-if="
+                      formData &&
+                      formData.Kontrolrapport &&
+                      formData.Kontrolrapport.bemerkninger &&
+                      formData.Kontrolrapport.bemerkninger[item.nr]
+                    "
+                  >
+                    {{ formData.Kontrolrapport.bemerkninger[item.nr] }}
+                  </p>
+                </div>
+                <div class="horizontal-line">
+                  <input
+                    placeholder="initial"
+                    v-model="kontrolInitialer[item.nr]"
+                    class="min-width40"
+                  />
+                  <input
+                    v-model="kontrolDato[item.nr]"
+                    class="min-width40"
+                    placeholder="dato"
+                  />
+                </div>
+
+                <textarea
+                  class="full-width-input"
                   v-model="bemerkninger[item.nr]"
-                  placeholder="initial"
-                  class="min-width40"
-                />
-                <!-- <div></div> -->
-                <input v-model="bemerkninger[item.nr]" />
-                <button class="block-button">send</button>
+                ></textarea>
               </div>
             </td>
           </tr>
@@ -275,7 +230,7 @@ export default {
       // resultat: {},
       kontrolDato: {},
       kontrolInitialer: {},
-      bemerkninger: { BSR1: "RK, 28/10 bemærkning" },
+      bemerkninger: {},
       projekterende: {},
       kontrollant: {},
       selectedStatus: {},
@@ -311,6 +266,7 @@ export default {
         if (docSnapshot.exists()) {
           // If the document exists, set the user data
           this.formData = docSnapshot.data();
+          console.log(this.formData.Kontrolrapport.bemerkninger);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -318,29 +274,6 @@ export default {
     },
     // --------------------------------------designSaveResult-----------------------------------------
     async designSaveResult() {
-      // Perform your save operation or other tasks here
-
-      // // Check if at least one checkbox is checked
-      // const atLeastOneCheckboxChecked = Object.values(this.checkboxValues).some(
-      //   (value) => value
-      // );
-
-      // if (!atLeastOneCheckboxChecked) {
-      //   // Display an error message or handle the error as needed
-      //   alert(
-      //     "Vælg mindst ét kontrolpunkt i checkboksene ude til højre, under 'Design'"
-      //   );
-      //   return;
-      // }
-
-      // // burde også have et tjek om den findes i forvejen..?
-      // if (this.projectData.designDocId) {
-      //   alert(
-      //     "Design er allerede oprettet, gå til hovedsiden for at se den. (Eller skal det være muligt at overskrive?)"
-      //   );
-      //   return;
-      // }
-
       const docToUpdate = doc(db, "documents", this.parameter);
 
       // Define the field you want to update

@@ -26,7 +26,7 @@ input[type="password"] {
 
 table {
   margin-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   margin-right: 50px;
   max-width: 100%;
   border-collapse: collapse;
@@ -90,6 +90,11 @@ table tbody tr:nth-child(even) {
   white-space: nowrap; /* Prevent wrapping for this column */
 }
 
+.item-nr {
+  white-space: nowrap;
+  width: 70px;
+}
+
 .block-button {
   display: block;
   margin-block: 7px; /* Adjust the margin-top as needed to control the spacing */
@@ -102,14 +107,16 @@ table tbody tr:nth-child(even) {
 
 .min-width40 {
   max-width: 30px;
+  margin-bottom: 7px;
 }
 
 .min-width180 {
-  min-width: 160px;
+  width: 160px;
 }
 
 .min-width250 {
   min-width: 260px;
+  max-width: 330px;
 }
 
 .invisible-column {
@@ -129,6 +136,7 @@ table tbody tr:nth-child(even) {
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 20px; /* Adjust the font size as needed */
+  margin-bottom: 20px;
 }
 
 /* Hover effect for action buttons */
@@ -176,4 +184,17 @@ table tbody tr:nth-child(even) {
 
 .square-container p {
   margin-block: 5px; /* Adjust the margin as needed */
+}
+
+.horizontal-line {
+  display: flex; /* Use flexbox to place elements side by side */
+  gap: 7px; /* Adjust the gap between the input fields as needed */
+}
+
+.sameline-ptag {
+  display: flex;
+}
+
+.margin-bemerkninger {
+  margin: 5px;
 }
