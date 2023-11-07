@@ -37,7 +37,7 @@
         </tr>
       </tbody>
     </table>
-    <!-- --------------------oversigt slut ------------------------->
+    <!-- --------------------oversigt slut -------------------------------->
 
     <div v-for="key in this.formData.checkBoxValues" :key="key">
       <!---------------------- KONTROLOBJEKTER----------------------------------->
